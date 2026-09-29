@@ -29,19 +29,32 @@
         body {
             background-color: var(--bg-light);
             color: var(--text-color);
-            padding-bottom: 90px;
+            padding-bottom: 110px;
             direction: ltr;
             text-align: left;
         }
 
-        /* Announcement Bar */
+        /* Announcement Bar with Marquee Animation */
         .announcement-bar {
             background-color: var(--primary-dark);
             color: white;
-            text-align: center;
-            padding: 8px 15px;
+            padding: 8px 0;
             font-size: 14px;
             font-weight: 600;
+            overflow: hidden;
+            white-space: nowrap;
+            position: relative;
+        }
+
+        .marquee-text {
+            display: inline-block;
+            padding-left: 100%;
+            animation: marquee 20s linear infinite;
+        }
+
+        @keyframes marquee {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(-100%, 0); }
         }
 
         /* Header & Logo */
@@ -70,7 +83,7 @@
         }
 
         .brand-details h1 {
-            font-size: 20px;
+            font-size: 18px;
             color: var(--primary);
             line-height: 1.2;
         }
@@ -78,6 +91,18 @@
         .brand-details p {
             font-size: 12px;
             color: #666;
+        }
+
+        /* Center Banner Placeholder Slot */
+        .header-center-slot {
+            flex-grow: 1;
+            text-align: center;
+            padding: 0 10px;
+        }
+
+        .header-center-slot img {
+            max-height: 50px;
+            border-radius: 6px;
         }
 
         .store-status {
@@ -136,17 +161,9 @@
             padding: 0 15px;
         }
 
-        .section-title {
-            font-size: 22px;
-            color: var(--primary);
-            margin: 25px 0 15px 0;
-            border-left: 4px solid var(--primary);
-            padding-left: 10px;
-        }
-
         .menu-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
             gap: 15px;
         }
 
@@ -158,29 +175,10 @@
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            position: relative;
-        }
-
-        .item-card.sold-out {
-            opacity: 0.6;
-        }
-
-        .item-card.sold-out::after {
-            content: "Sold Out (غير متوفر)";
-            position: absolute;
-            top: 40%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: rgba(211, 47, 47, 0.9);
-            color: white;
-            padding: 5px 12px;
-            border-radius: 5px;
-            font-weight: bold;
-            font-size: 13px;
         }
 
         .item-info h3 {
-            font-size: 16px;
+            font-size: 15px;
             margin-bottom: 4px;
         }
 
@@ -188,6 +186,25 @@
             font-size: 12px;
             color: #777;
             margin-bottom: 10px;
+        }
+
+        /* Flavor Option Selector */
+        .flavor-selection {
+            display: flex;
+            gap: 12px;
+            margin: 8px 0;
+            font-size: 12px;
+            font-weight: 600;
+            background: #f1f1f1;
+            padding: 6px 10px;
+            border-radius: 6px;
+        }
+
+        .flavor-selection label {
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 4px;
         }
 
         .item-bottom {
@@ -214,11 +231,6 @@
             transition: 0.2s;
         }
 
-        .add-btn:disabled {
-            background: #ccc;
-            cursor: not-allowed;
-        }
-
         /* Cart Floating Footer Bar */
         .cart-bar {
             position: fixed;
@@ -234,11 +246,6 @@
             z-index: 1000;
         }
 
-        .cart-info {
-            display: flex;
-            flex-direction: column;
-        }
-
         .cart-total {
             font-size: 18px;
             font-weight: 800;
@@ -251,7 +258,7 @@
             border: none;
             padding: 10px 24px;
             border-radius: 25px;
-            font-size: 16px;
+            font-size: 15px;
             font-weight: 700;
             cursor: pointer;
             display: flex;
@@ -301,7 +308,7 @@
             margin-bottom: 5px;
         }
 
-        .form-group input, .form-group select {
+        .form-group input {
             width: 100%;
             padding: 8px 12px;
             border: 1px solid #ccc;
@@ -316,11 +323,6 @@
             border-radius: 6px;
             font-size: 13px;
             margin-bottom: 15px;
-        }
-
-        .delivery-note-box ul {
-            margin-left: 20px;
-            margin-top: 5px;
         }
 
         .cart-item-row {
@@ -347,13 +349,46 @@
             cursor: pointer;
             font-weight: bold;
         }
+
+        /* Footer Section */
+        footer {
+            background: #222;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 30px;
+            border-radius: 12px 12px 0 0;
+        }
+
+        .location-btn {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        /* Photo Gallery Slot */
+        .gallery-slot {
+            margin-top: 15px;
+            border: 2px dashed #555;
+            padding: 15px;
+            border-radius: 8px;
+            color: #aaa;
+            font-size: 13px;
+        }
     </style>
 </head>
 <body>
 
-    <!-- Announcement Bar -->
+    <!-- Top Moving Announcement Bar -->
     <div class="announcement-bar">
-        Main Branch: Al Salam, Riyadh | Working Hours: 12:30 PM - 1:30 AM (الفرع الرئيسي: السلام، الرياض)
+        <div class="marquee-text">
+            📍 Al Salam, Riyadh | Working Hours: 12:30 PM - 01:30 AM &nbsp;&nbsp; | &nbsp;&nbsp; 📍 السلام، الرياض | أوقات العمل: ١٢:٣٠ ظهراً - ٠١:٣٠ ليلاً
+        </div>
     </div>
 
     <!-- Header -->
@@ -361,38 +396,62 @@
         <div class="logo-container">
             <img src="logo.png" alt="Kufi Broasted" onerror="this.src='https://via.placeholder.com/55?text=Kufi'">
             <div class="brand-details">
-                <h1>Kufi Broasted - كوفي بروستد</h1>
-                <p>Al Salam - السلام</p>
+                <h1>Kufi Broasted</h1>
+                <p>كوفي بروستد - السلام</p>
             </div>
         </div>
+
+        <!-- Center Image Slot (ഫോട്ടോ പിന്നീട് നൽകാൻ) -->
+        <div class="header-center-slot">
+            <!-- Central Photo Slot -->
+        </div>
+
         <div id="store-status-badge" class="store-status status-open">...</div>
     </header>
 
-    <!-- Category Navigation -->
+    <!-- Category Navigation (ALL ഒഴിവാക്കി Shawarma മുതൽ) -->
     <div class="category-nav">
-        <button class="cat-btn active" onclick="filterCategory('all')">All (الكل)</button>
-        <button class="cat-btn" onclick="filterCategory('broasted')">Broasted (بروستد)</button>
-        <button class="cat-btn" onclick="filterCategory('shawarma')">Shawarma (شاورما)</button>
-        <button class="cat-btn" onclick="filterCategory('tortilla')">Tortilla (تورتيلا)</button>
-        <button class="cat-btn" onclick="filterCategory('burgers')">Burgers (برجر)</button>
-        <button class="cat-btn" onclick="filterCategory('sandwiches')">Sandwiches (ساندويشات)</button>
-        <button class="cat-btn" onclick="filterCategory('juices')">Fresh Juices (عصير طازج)</button>
-        <button class="cat-btn" onclick="filterCategory('drinks')">Drinks (مشروبات)</button>
+        <button class="cat-btn active" onclick="filterCategory('shawarma', event)">Shawarma (شاورما)</button>
+        <button class="cat-btn" onclick="filterCategory('broasted', event)">Broasted (بروستد)</button>
+        <button class="cat-btn" onclick="filterCategory('burgers', event)">Burgers (برجر)</button>
+        <button class="cat-btn" onclick="filterCategory('tortilla', event)">Tortilla (تورتيلا)</button>
+        <button class="cat-btn" onclick="filterCategory('sandwiches', event)">Sandwiches (ساندويشات)</button>
+        <button class="cat-btn" onclick="filterCategory('juices', event)">Fresh Juices (عصير طازج)</button>
+        <button class="cat-btn" onclick="filterCategory('drinks', event)">Drinks (مشروبات)</button>
     </div>
 
     <!-- Main Container -->
     <div class="container" id="menu-container">
-        <!-- Menu Items loaded by JS -->
+        <!-- Menu Items dynamically loaded -->
+    </div>
+
+    <!-- Footer Area -->
+    <div class="container">
+        <footer>
+            <h3>Kufi Broasted - كوفي بروستد</h3>
+            <p style="font-size: 13px; color: #ccc; margin-top: 5px;">Al Salam District, Riyadh - حي السلام، الرياض</p>
+            
+            <!-- Google Location Link -->
+            <a href="https://maps.google.com" target="_blank" class="location-btn">
+                <i class="fas fa-map-marker-alt"></i> Location on Google Maps (موقعنا على الخريطة)
+            </a>
+
+            <!-- Photo Gallery Slot Placeholder -->
+            <div class="gallery-slot">
+                <i class="fas fa-images" style="font-size:24px; margin-bottom:5px;"></i><br>
+                Photo Gallery Section (سيتم إضافة صور المعرض لاحقاً)
+            </div>
+        </footer>
     </div>
 
     <!-- Cart Floating Bar -->
     <div class="cart-bar">
-        <div class="cart-info">
-            <span style="font-size: 12px; color: #666;">Total (الإجمالي):</span>
+        <div>
+            <span style="font-size: 12px; color: #666;">Total (الإجمالي):</span><br>
             <span class="cart-total" id="cart-total-display">0 SR</span>
         </div>
         <button class="checkout-btn" onclick="openCheckoutModal()">
-            <i class="fab fa-whatsapp"></i> View Cart / View Checkout
+            <i class="fab fa-whatsapp"></i> View Cart / Checkout
         </button>
     </div>
 
@@ -404,16 +463,13 @@
                 <span style="cursor:pointer; font-size:20px;" onclick="closeCheckoutModal()">&times;</span>
             </div>
 
-            <div id="cart-items-list">
-                <!-- Cart items list here -->
-            </div>
+            <div id="cart-items-list"></div>
 
             <hr style="margin: 15px 0;">
 
-            <!-- Delivery Charges Note -->
             <div class="delivery-note-box">
                 <strong>Delivery Charges Note / ملاحظة رسوم التوصيل:</strong>
-                <ul>
+                <ul style="margin-left:20px; margin-top:5px;">
                     <li>0 - 2 km: 3 SR</li>
                     <li>2 - 4 km: 5 SR</li>
                     <li>4 - 6 km: 8 SR</li>
@@ -423,19 +479,15 @@
 
             <div class="form-group">
                 <label>Name / الاسم:</label>
-                <input type="text" id="cust-name" placeholder="Enter your full name">
+                <input type="text" id="cust-name" placeholder="Enter full name">
             </div>
 
             <div class="form-group">
                 <label>Address / العنوان:</label>
-                <input type="text" id="cust-address" placeholder="Enter neighborhood and street name">
+                <input type="text" id="cust-address" placeholder="Neighborhood, Street name...">
             </div>
 
             <div style="background: #f9f9f9; padding: 10px; border-radius: 6px; margin-top: 10px;">
-                <div style="display:flex; justify-content:space-between; font-size:14px; margin-bottom:4px;">
-                    <span>Subtotal / مجموع الوجبات:</span>
-                    <span id="subtotal-val">0 SR</span>
-                </div>
                 <div style="display:flex; justify-content:space-between; font-weight:bold; font-size:16px; color:var(--primary);">
                     <span>Total Amount / المبلغ الإجمالي:</span>
                     <span id="final-total-val">0 SR</span>
@@ -443,84 +495,86 @@
             </div>
 
             <button class="checkout-btn" style="width: 100%; margin-top: 15px; justify-content: center;" onclick="sendOrderWhatsApp()">
-                <i class="fab fa-whatsapp"></i> Confirm & Send via WhatsApp
+                <i class="fab fa-whatsapp"></i> Send via WhatsApp
             </button>
         </div>
     </div>
 
     <script>
-        // Menu Data
+        // Menu Items (Prices sorted Low to High in each category)
         const menuItems = [
-            // Shawarma
-            { id: 's1', name: 'Shawarma Cheese / شاورما جبن', category: 'shawarma', price: 7, desc: 'Chicken Shawarma with Cheese / شاورما دجاج مع الجبن', soldOut: false },
-            { id: 's2', name: 'Saroukh Cheese / صاروخ شاورما جبن', category: 'shawarma', price: 13, desc: 'Large Saroukh Shawarma with Cheese / صاروخ شاورما حجم كبير مع الجبن', soldOut: false },
-            { id: 's3', name: 'Tortilla Box / تورتيلا بوكس شاورما', category: 'shawarma', price: 35, desc: 'Complete Tortilla Shawarma Box / بوكس شاورما تورتيلا متكامل', soldOut: false },
-            { id: 's4', name: 'Shawarma Sandwich / ساندوتش شاورما', category: 'shawarma', price: 6, desc: 'CAL 352', soldOut: false },
-            { id: 's5', name: 'Saroukh Saj / صاروخ صاج', category: 'shawarma', price: 12, desc: 'CAL 676 (Extra Cheese +1 SR)', soldOut: false },
-            { id: 's6', name: 'Jambo Shawarma / شاورما جامبو', category: 'shawarma', price: 12, desc: 'CAL 525', soldOut: false },
-            { id: 's7', name: 'Shawarma Arabian / شاورما عربي', category: 'shawarma', price: 15, desc: 'CAL 753', soldOut: false },
-            { id: 's8', name: 'Plate Shawarma / صحن شاورما', category: 'shawarma', price: 15, desc: 'CAL 724', soldOut: false },
-            { id: 's9', name: 'Kufi Shawarma 10Pcs / شاورما كوفي', category: 'shawarma', price: 25, desc: 'CAL 1506', soldOut: false },
+            // Shawarma (Sorted 6 -> 35 SR)
+            { id: 's1', name: 'Shawarma Sandwich / ساندوتش شاورما', category: 'shawarma', price: 6, desc: 'CAL 352', hasFlavor: false },
+            { id: 's2', name: 'Shawarma Cheese / شاورما جبن', category: 'shawarma', price: 7, desc: 'Chicken Shawarma with Cheese', hasFlavor: false },
+            { id: 's3', name: 'Saroukh Saj / صاروخ صاج', category: 'shawarma', price: 12, desc: 'CAL 676', hasFlavor: false },
+            { id: 's4', name: 'Jambo Shawarma / شاورما جامبو', category: 'shawarma', price: 12, desc: 'CAL 525', hasFlavor: false },
+            { id: 's5', name: 'Saroukh Cheese / صاروخ شاورما جبن', category: 'shawarma', price: 13, desc: 'Large Saroukh with Cheese', hasFlavor: false },
+            { id: 's6', name: 'Shawarma Arabian / شاورما عربي', category: 'shawarma', price: 15, desc: 'CAL 753', hasFlavor: false },
+            { id: 's7', name: 'Plate Shawarma / صحن شاورما', category: 'shawarma', price: 15, desc: 'CAL 724', hasFlavor: false },
+            { id: 's8', name: 'Kufi Shawarma 10Pcs / شاورما كوفي', category: 'shawarma', price: 25, desc: 'CAL 1506', hasFlavor: false },
+            { id: 's9', name: 'Tortilla Box / تورتيلا بوكس شاورما', category: 'shawarma', price: 35, desc: 'Complete Tortilla Shawarma Box', hasFlavor: false },
 
-            // Broasted
-            { id: 'b1', name: 'Chicken Broasted 4Pcs / بروستد دجاج 4 قطع', category: 'broasted', price: 20, desc: 'Normal / Spicy CAL 1745', soldOut: false },
-            { id: 'b2', name: 'Chicken Zinger 4Pcs / زنجر دجاج 4 قطع', category: 'broasted', price: 23, desc: 'Normal / Spicy CAL 1873', soldOut: false },
-            { id: 'b3', name: 'Fish Broasted 1Pcs / بروستد سمك', category: 'broasted', price: 20, desc: 'CAL 1885', soldOut: false },
-            { id: 'b4', name: 'Chicken Nuggets 12Pcs / ناجت دجاج 12 قطعة', category: 'broasted', price: 20, desc: 'CAL 1873', soldOut: false },
-            { id: 'b5', name: 'Chicken Boneless 10Pcs / مسحب دجاج 10 قطع', category: 'broasted', price: 20, desc: 'CAL 1840', soldOut: false },
-            { id: 'b6', name: 'Chicken Strips 6Pcs / ستريبس دجاج 6 قطع', category: 'broasted', price: 20, desc: 'CAL 1875', soldOut: false },
-            { id: 'b7', name: 'Shrimp Broasted 12Pcs / بروستد روبيان 12 قطعة', category: 'broasted', price: 23, desc: 'CAL 1719', soldOut: false },
+            // Broasted (Sorted 20 -> 23 SR)
+            { id: 'b1', name: 'Chicken Broasted 4Pcs / بروستد دجاج 4 قطع', category: 'broasted', price: 20, desc: 'CAL 1745', hasFlavor: true },
+            { id: 'b2', name: 'Fish Broasted 1Pcs / بروستد سمك', category: 'broasted', price: 20, desc: 'CAL 1885', hasFlavor: false },
+            { id: 'b3', name: 'Chicken Nuggets 12Pcs / ناجت دجاج 12 قطعة', category: 'broasted', price: 20, desc: 'CAL 1873', hasFlavor: false },
+            { id: 'b4', name: 'Chicken Boneless 10Pcs / مسحب دجاج 10 قطع', category: 'broasted', price: 20, desc: 'CAL 1840', hasFlavor: true },
+            { id: 'b5', name: 'Chicken Strips 6Pcs / ستريبس دجاج 6 قطع', category: 'broasted', price: 20, desc: 'CAL 1875', hasFlavor: true },
+            { id: 'b6', name: 'Chicken Zinger 4Pcs / زنجر دجاج 4 قطع', category: 'broasted', price: 23, desc: 'CAL 1873', hasFlavor: true },
+            { id: 'b7', name: 'Shrimp Broasted 12Pcs / بروستد روبيان 12 قطعة', category: 'broasted', price: 23, desc: 'CAL 1719', hasFlavor: true },
 
-            // Burgers
-            { id: 'bg1', name: 'Zinger Cheese Burger / برجر زنجر بالجبن', category: 'burgers', price: 12, desc: 'CAL 856', soldOut: false },
-            { id: 'bg2', name: 'Crunchy Burger / برجر كرانشي', category: 'burgers', price: 16, desc: 'With onion rings and fries / مع حلقات البصل والبطاطس', soldOut: false },
-            { id: 'bg3', name: 'Beef Cheese Burger / برجر لحم بالجبن', category: 'burgers', price: 8, desc: 'CAL 856', soldOut: false },
-            { id: 'bg4', name: 'Chicken Cheese Burger / برجر دجاج بالجبن', category: 'burgers', price: 8, desc: 'CAL 724', soldOut: false },
+            // Burgers (Sorted 8 -> 16 SR)
+            { id: 'bg1', name: 'Beef Cheese Burger / برجر لحم بالجبن', category: 'burgers', price: 8, desc: 'CAL 856', hasFlavor: false },
+            { id: 'bg2', name: 'Chicken Cheese Burger / برجر دجاج بالجبن', category: 'burgers', price: 8, desc: 'CAL 724', hasFlavor: false },
+            { id: 'bg3', name: 'Zinger Cheese Burger / برجر زنجر بالجبن', category: 'burgers', price: 12, desc: 'CAL 856', hasFlavor: true },
+            { id: 'bg4', name: 'Crunchy Burger / برجر كرانشي', category: 'burgers', price: 16, desc: 'With onion rings & fries', hasFlavor: true },
 
-            // Tortilla
-            { id: 't1', name: 'Beef Kabab Tortilla / تورتيلا كباب لحم', category: 'tortilla', price: 12, desc: 'CAL 832', soldOut: false },
-            { id: 't2', name: 'Chicken Tortilla / تورتيلا دجاج', category: 'tortilla', price: 12, desc: 'Normal (12) / Spicy (13)', soldOut: false },
-            { id: 't3', name: 'Shrimp Tortilla / تورتيلا روبيان', category: 'tortilla', price: 13, desc: 'CAL 832', soldOut: false },
-            { id: 't4', name: 'Zinger Tortilla / تورتيلا زنجر', category: 'tortilla', price: 15, desc: 'CAL 826', soldOut: false },
+            // Tortilla (Sorted 12 -> 15 SR)
+            { id: 't1', name: 'Beef Kabab Tortilla / تورتيلا كباب لحم', category: 'tortilla', price: 12, desc: 'CAL 832', hasFlavor: false },
+            { id: 't2', name: 'Chicken Tortilla / تورتيلا دجاج', category: 'tortilla', price: 12, desc: 'Delicious Chicken Tortilla', hasFlavor: true },
+            { id: 't3', name: 'Shrimp Tortilla / تورتيلا روبيان', category: 'tortilla', price: 13, desc: 'CAL 832', hasFlavor: true },
+            { id: 't4', name: 'Zinger Tortilla / تورتيلا زنجر', category: 'tortilla', price: 15, desc: 'CAL 826', hasFlavor: true },
 
-            // Sandwiches
-            { id: 'sw1', name: 'Strip Sandwich / ساندوتش ستريبس', category: 'sandwiches', price: 11, desc: 'CAL 883', soldOut: false },
-            { id: 'sw2', name: 'Shrimp Sandwich / ساندوتش روبيان', category: 'sandwiches', price: 13, desc: 'CAL 826', soldOut: false },
-            { id: 'sw3', name: 'Kabab Sandwich / ساندوتش كباب', category: 'sandwiches', price: 11, desc: 'CAL 875', soldOut: false },
+            // Sandwiches (Sorted 11 -> 13 SR)
+            { id: 'sw1', name: 'Strip Sandwich / ساندوتش ستريبس', category: 'sandwiches', price: 11, desc: 'CAL 883', hasFlavor: true },
+            { id: 'sw2', name: 'Kabab Sandwich / ساندوتش كباب', category: 'sandwiches', price: 11, desc: 'CAL 875', hasFlavor: false },
+            { id: 'sw3', name: 'Shrimp Sandwich / ساندوتش روبيان', category: 'sandwiches', price: 13, desc: 'CAL 826', hasFlavor: true },
 
-            // Fresh Juices
-            { id: 'j1', name: 'Cocktail Juice / عصير كوكتيل', category: 'juices', price: 7, desc: 'Medium (7 SR) / Large (8 SR)', soldOut: false },
-            { id: 'j2', name: 'Orange Juice / عصير برتقال', category: 'juices', price: 7, desc: 'Medium (7 SR) / Large (8 SR)', soldOut: false },
-            { id: 'j3', name: 'Mango Juice / عصير مانجو', category: 'juices', price: 7, desc: 'Medium (7 SR) / Large (8 SR)', soldOut: false },
-            { id: 'j4', name: 'Awar Heart / عوار قلب', category: 'juices', price: 8, desc: 'Medium (8 SR) / Large (9 SR)', soldOut: false },
-            { id: 'j5', name: 'Avocado Juice / عصير أفوكادو', category: 'juices', price: 9, desc: 'Medium (9 SR) / Large (10 SR)', soldOut: false },
+            // Juices (Sorted 7 -> 9 SR)
+            { id: 'j1', name: 'Cocktail Juice / عصير كوكتيل', category: 'juices', price: 7, desc: 'Fresh Cocktail', hasFlavor: false },
+            { id: 'j2', name: 'Orange Juice / عصير برتقال', category: 'juices', price: 7, desc: '100% Fresh Orange', hasFlavor: false },
+            { id: 'j3', name: 'Mango Juice / عصير مانجو', category: 'juices', price: 7, desc: 'Fresh Mango', hasFlavor: false },
+            { id: 'j4', name: 'Awar Heart / عوار قلب', category: 'juices', price: 8, desc: 'Special Mix', hasFlavor: false },
+            { id: 'j5', name: 'Avocado Juice / عصير أفوكادو', category: 'juices', price: 9, desc: 'Fresh Avocado', hasFlavor: false },
 
-            // Drinks
-            { id: 'd1', name: 'Soft Drinks / مشروبات غازية', category: 'drinks', price: 3, desc: 'Pepsi / 7up / Dew', soldOut: false },
-            { id: 'd2', name: 'Water / مياه', category: 'drinks', price: 1, desc: 'Mineral Water / مياه صحية', soldOut: false }
+            // Drinks (Sorted 1 -> 3 SR)
+            { id: 'd1', name: 'Water / مياه', category: 'drinks', price: 1, desc: 'Mineral Water', hasFlavor: false },
+            { id: 'd2', name: 'Soft Drinks / مشروبات غازية', category: 'drinks', price: 3, desc: 'Pepsi / 7up / Dew', hasFlavor: false }
         ];
 
         let cart = {};
 
-        // Load & Display Items
-        function renderMenu(category = 'all') {
+        function renderMenu(category) {
             const container = document.getElementById('menu-container');
-            container.innerHTML = '';
-
-            const filtered = category === 'all' ? menuItems : menuItems.filter(i => i.category === category);
+            const filtered = menuItems.filter(i => i.category === category);
 
             let html = '<div class="menu-grid">';
             filtered.forEach(item => {
-                const isSoldOut = item.soldOut ? 'sold-out' : '';
                 html += `
-                    <div class="item-card ${isSoldOut}">
+                    <div class="item-card">
                         <div class="item-info">
                             <h3>${item.name}</h3>
                             <p>${item.desc}</p>
+                            ${item.hasFlavor ? `
+                                <div class="flavor-selection">
+                                    <label><input type="radio" name="flavor_${item.id}" value="Normal" checked> Normal (عادي)</label>
+                                    <label><input type="radio" name="flavor_${item.id}" value="Spicy"> Spicy (حراق)</label>
+                                </div>
+                            ` : ''}
                         </div>
                         <div class="item-bottom">
                             <span class="item-price">${item.price} SR</span>
-                            <button class="add-btn" onclick="addToCart('${item.id}')" ${item.soldOut ? 'disabled' : ''}>
+                            <button class="add-btn" onclick="addToCart('${item.id}')">
                                 + Add / إضافة
                             </button>
                         </div>
@@ -531,58 +585,69 @@
             container.innerHTML = html;
         }
 
-        function filterCategory(cat) {
+        function filterCategory(cat, event) {
             document.querySelectorAll('.cat-btn').forEach(btn => btn.classList.remove('active'));
             event.target.classList.add('active');
             renderMenu(cat);
         }
 
-        // Cart Actions
         function addToCart(id) {
-            if (cart[id]) {
-                cart[id]++;
+            const item = menuItems.find(i => i.id === id);
+            let flavor = '';
+            if (item.hasFlavor) {
+                const selectedRadio = document.querySelector(`input[name="flavor_${id}"]:checked`);
+                if (selectedRadio) flavor = ` (${selectedRadio.value})`;
+            }
+
+            const cartKey = id + flavor;
+
+            if (cart[cartKey]) {
+                cart[cartKey].qty++;
             } else {
-                cart[id] = 1;
+                cart[cartKey] = {
+                    id: id,
+                    name: item.name + flavor,
+                    price: item.price,
+                    qty: 1
+                };
             }
             updateCartUI();
         }
 
-        function changeQty(id, delta) {
-            if (cart[id]) {
-                cart[id] += delta;
-                if (cart[id] <= 0) delete cart[id];
+        function changeQty(key, delta) {
+            if (cart[key]) {
+                cart[key].qty += delta;
+                if (cart[key].qty <= 0) delete cart[key];
             }
             updateCartUI();
         }
 
         function updateCartUI() {
-            let subtotal = 0;
+            let total = 0;
             let cartListHtml = '';
 
-            for (let id in cart) {
-                const item = menuItems.find(i => i.id === id);
-                const itemTotal = item.price * cart[id];
-                subtotal += itemTotal;
+            for (let key in cart) {
+                const item = cart[key];
+                const itemTotal = item.price * item.qty;
+                total += itemTotal;
 
                 cartListHtml += `
                     <div class="cart-item-row">
                         <div>
                             <strong>${item.name}</strong><br>
-                            <small>${item.price} SR × ${cart[id]} = ${itemTotal} SR</small>
+                            <small>${item.price} SR × ${item.qty} = ${itemTotal} SR</small>
                         </div>
                         <div class="qty-controls">
-                            <button class="qty-btn" onclick="changeQty('${id}', -1)">-</button>
-                            <span>${cart[id]}</span>
-                            <button class="qty-btn" onclick="changeQty('${id}', 1)">+</button>
+                            <button class="qty-btn" onclick="changeQty('${key}', -1)">-</button>
+                            <span>${item.qty}</span>
+                            <button class="qty-btn" onclick="changeQty('${key}', 1)">+</button>
                         </div>
                     </div>
                 `;
             }
 
-            document.getElementById('cart-total-display').innerText = subtotal + ' SR';
-            document.getElementById('subtotal-val').innerText = subtotal + ' SR';
-            document.getElementById('final-total-val').innerText = subtotal + ' SR';
-
+            document.getElementById('cart-total-display').innerText = total + ' SR';
+            document.getElementById('final-total-val').innerText = total + ' SR';
             document.getElementById('cart-items-list').innerHTML = cartListHtml || '<p style="text-align:center; color:#888;">Cart is empty / السلة فارغة</p>';
         }
 
@@ -603,7 +668,7 @@
             const address = document.getElementById('cust-address').value.trim();
 
             if (!name || !address) {
-                alert('Please enter your name and address! / يرجى كتابة الاسم والعنوان بشكل صحيح!');
+                alert('Please enter your name and address! / يرجى كتابة الاسم والعنوان!');
                 return;
             }
 
@@ -612,45 +677,44 @@
             msg += `📍 *Address / العنوان:* ${address}\n\n`;
             msg += `🛒 *Items / الوجبات:* \n`;
 
-            let subtotal = 0;
-            for (let id in cart) {
-                const item = menuItems.find(i => i.id === id);
-                const itemTotal = item.price * cart[id];
-                subtotal += itemTotal;
-                msg += `- ${item.name} × ${cart[id]} = ${itemTotal} SR\n`;
+            let total = 0;
+            for (let key in cart) {
+                const item = cart[key];
+                const itemTotal = item.price * item.qty;
+                total += itemTotal;
+                msg += `- ${item.name} × ${item.qty} = ${itemTotal} SR\n`;
             }
 
-            msg += `\n💵 *Subtotal / المجموع:* ${subtotal} SR`;
+            msg += `\n💵 *Total Amount / المبلغ الإجمالي:* ${total} SR`;
             msg += `\n🚚 *Delivery Charge / رسوم التوصيل:* (As per distance list / حسب جدول المسافة)`;
 
-            const phone = "966566519003"; // WhatsApp Number
+            const phone = "966566519003";
             const url = `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`;
             window.open(url, '_blank');
         }
 
-        // Store Opening Hours Status Check (12:30 PM to 01:30 AM)
         function checkStoreStatus() {
             const now = new Date();
             const hours = now.getHours();
             const minutes = now.getMinutes();
             const currentTime = hours * 60 + minutes;
 
-            const openTime = 12 * 60 + 30; // 12:30 PM (750 mins)
-            const closeTime = 1 * 60 + 30;  // 01:30 AM (90 mins next day)
+            const openTime = 12 * 60 + 30; // 12:30 PM
+            const closeTime = 1 * 60 + 30;  // 01:30 AM
 
             const badge = document.getElementById('store-status-badge');
 
             if (currentTime >= openTime || currentTime < closeTime) {
-                badge.innerText = 'OPEN NOW (مفتوح الان)';
+                badge.innerText = 'OPEN NOW (مفتوح الآن)';
                 badge.className = 'store-status status-open';
             } else {
-                badge.innerText = 'CLOSED NOW (مغلق الان)';
+                badge.innerText = 'CLOSED NOW (مغلق الآن)';
                 badge.className = 'store-status status-closed';
             }
         }
 
-        // Initialize Page
-        renderMenu();
+        // Default Load: Shawarma Category
+        renderMenu('shawarma');
         checkStoreStatus();
     </script>
 </body>
