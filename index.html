@@ -134,35 +134,51 @@
             color: #c62828;
         }
 
-        .category-nav {
-            display: flex;
-            overflow-x: auto;
+        /* 3x3 Grid Category Navigation */
+        .category-grid-nav {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
             background: white;
-            padding: 12px 15px;
-            gap: 10px;
+            padding: 12px;
             border-bottom: 1px solid var(--gray-light);
-            white-space: nowrap;
-        }
-
-        .category-nav::-webkit-scrollbar {
-            display: none;
+            max-width: 800px;
+            margin: 0 auto;
         }
 
         .cat-btn {
-            padding: 8px 18px;
+            padding: 10px 4px;
             border: 1px solid var(--gray-light);
-            border-radius: 25px;
-            background: white;
+            border-radius: 8px;
+            background: #fdfdfd;
             color: var(--text-color);
-            font-weight: 600;
+            font-weight: 700;
+            font-size: 13px;
             cursor: pointer;
             transition: 0.3s;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            line-height: 1.2;
+        }
+
+        .cat-btn span {
+            font-size: 11px;
+            font-weight: 400;
+            color: #666;
+            margin-top: 2px;
         }
 
         .cat-btn.active, .cat-btn:hover {
             background: var(--primary);
             color: white;
             border-color: var(--primary);
+        }
+
+        .cat-btn.active span, .cat-btn:hover span {
+            color: #fff;
         }
 
         .container {
@@ -198,18 +214,19 @@
             margin-bottom: 10px;
         }
 
-        .flavor-selection {
+        .option-selection {
             display: flex;
-            gap: 12px;
+            flex-wrap: wrap;
+            gap: 8px;
             margin: 8px 0;
             font-size: 12px;
             font-weight: 600;
             background: #f1f1f1;
-            padding: 6px 10px;
+            padding: 8px;
             border-radius: 6px;
         }
 
-        .flavor-selection label {
+        .option-selection label {
             cursor: pointer;
             display: flex;
             align-items: center;
@@ -436,14 +453,17 @@
         </div>
     </header>
 
-    <div class="category-nav">
-        <button class="cat-btn active" onclick="filterCategory('broasted', event)">Broasted (بروستد)</button>
-        <button class="cat-btn" onclick="filterCategory('shawarma', event)">Shawarma (شاورما)</button>
-        <button class="cat-btn" onclick="filterCategory('tortilla', event)">Tortilla (تورتيلا)</button>
-        <button class="cat-btn" onclick="filterCategory('burgers', event)">Burgers (برجر)</button>
-        <button class="cat-btn" onclick="filterCategory('sandwiches', event)">Sandwiches (ساندويشات)</button>
-        <button class="cat-btn" onclick="filterCategory('juices', event)">Fresh Juices (عصير طازج)</button>
-        <button class="cat-btn" onclick="filterCategory('drinks', event)">Drinks (مشروبات)</button>
+    <!-- 3x3 Grid Category Navigation -->
+    <div class="category-grid-nav">
+        <button class="cat-btn active" onclick="filterCategory('broasted', event)">Broasted<span>بروستد</span></button>
+        <button class="cat-btn" onclick="filterCategory('shawarma', event)">Shawarma<span>شاورما</span></button>
+        <button class="cat-btn" onclick="filterCategory('tortilla', event)">Tortilla<span>تورتيلا</span></button>
+        <button class="cat-btn" onclick="filterCategory('sandwiches', event)">Sandwiches<span>ساندويشات</span></button>
+        <button class="cat-btn" onclick="filterCategory('burgers', event)">Burgers<span>برجر</span></button>
+        <button class="cat-btn" onclick="filterCategory('sauces', event)">Sauces<span>صلصات</span></button>
+        <button class="cat-btn" onclick="filterCategory('sides', event)">Sides<span>طلبات جانبية</span></button>
+        <button class="cat-btn" onclick="filterCategory('juices', event)">Fresh Juices<span>عصير طازج</span></button>
+        <button class="cat-btn" onclick="filterCategory('drinks', event)">Soft Drinks<span>مشروبات غازية</span></button>
     </div>
 
     <div class="container" id="menu-container"></div>
@@ -464,7 +484,7 @@
 
             <div class="footer-credits">
                 <p>© Kufi Broasted. All rights reserved.</p>
-                <p style="margin-top: 4px;">Web Developer: Y2KMLPCR 0501163652</p>
+                <p style="margin-top: 4px;">Web Developer: y2kmlpcpr 0501163652</p>
             </div>
         </footer>
     </div>
@@ -472,7 +492,7 @@
     <div class="cart-bar">
         <div>
             <span style="font-size: 12px; color: #666;">Total (الإجمالي):</span><br>
-            <span class="cart-total" id="cart-total-display">0 SAR</span>
+            <span class="cart-total" id="cart-total-display">0 SR</span>
         </div>
         <button class="checkout-btn" onclick="openCheckoutModal()">
             <i class="fab fa-whatsapp"></i> View Cart / Checkout
@@ -521,7 +541,7 @@
             <div style="background: #f9f9f9; padding: 10px; border-radius: 6px; margin-top: 10px;">
                 <div style="display:flex; justify-content:space-between; font-weight:bold; font-size:16px; color:var(--primary);">
                     <span>Total Amount / المبلغ الإجمالي:</span>
-                    <span id="final-total-val">0 SAR</span>
+                    <span id="final-total-val">0 SR</span>
                 </div>
             </div>
 
@@ -533,55 +553,76 @@
 
     <script>
         const menuItems = [
-            // Broasted
-            { id: 'b1', nameEn: 'Broasted Chicken', nameAr: 'دجاج بروستد', category: 'broasted', price: 20.00, desc: 'CAL 1745', hasFlavor: true },
-            { id: 'b2', nameEn: 'Fish Broasted 1Pcs', nameAr: 'بروستد سمك', category: 'broasted', price: 20.00, desc: 'CAL 1885', hasFlavor: false },
-            { id: 'b3', nameEn: 'Chicken Nuggets 12Pcs', nameAr: 'ناجت دجاج 12 قطعة', category: 'broasted', price: 20.00, desc: 'CAL 1873', hasFlavor: false },
+            // 1. Broasted (بروستد)
+            { id: 'b1', nameEn: 'Chicken Broasted 4Pcs', nameAr: 'بروستد دجاج 4 قطع', category: 'broasted', price: 20.00, desc: 'CAL 1745', hasFlavor: true },
+            { id: 'b2', nameEn: 'Fish Broasted 1Pcs', nameAr: 'بروستد سمك قطعة', category: 'broasted', price: 20.00, desc: 'CAL 1885', hasFlavor: true },
+            { id: 'b3', nameEn: 'Chicken Nuggets 12Pcs', nameAr: 'ناجت دجاج 12 قطعة', category: 'broasted', price: 20.00, desc: 'CAL 1873', hasFlavor: true },
             { id: 'b4', nameEn: 'Chicken Boneless 10Pcs', nameAr: 'مسحب دجاج 10 قطع', category: 'broasted', price: 20.00, desc: 'CAL 1840', hasFlavor: true },
             { id: 'b5', nameEn: 'Chicken Strips 6Pcs', nameAr: 'ستريبس دجاج 6 قطع', category: 'broasted', price: 20.00, desc: 'CAL 1875', hasFlavor: true },
             { id: 'b6', nameEn: 'Chicken Zinger 4Pcs', nameAr: 'زنجر دجاج 4 قطع', category: 'broasted', price: 23.00, desc: 'CAL 1873', hasFlavor: true },
             { id: 'b7', nameEn: 'Shrimp Broasted 12Pcs', nameAr: 'بروستد روبيان 12 قطعة', category: 'broasted', price: 23.00, desc: 'CAL 1719', hasFlavor: true },
 
-            // Shawarma
+            // 2. Shawarma (شاورما)
             { id: 's1', nameEn: 'Shawarma Sandwich', nameAr: 'ساندوتش شاورما', category: 'shawarma', price: 6.00, desc: 'CAL 352', hasFlavor: false },
-            { id: 's2', nameEn: 'Shawarma Cheese', nameAr: 'شاورما جبن', category: 'shawarma', price: 7.00, desc: 'Chicken Shawarma with Cheese', hasFlavor: false },
-            { id: 's3', nameEn: 'Saroukh Saj', nameAr: 'صاروخ صاج', category: 'shawarma', price: 12.00, desc: 'CAL 676', hasFlavor: false },
+            { id: 's3', nameEn: 'Saroukh Saj Shawarma', nameAr: 'صاروخ صاج شاورما', category: 'shawarma', price: 12.00, desc: 'CAL 676 (Add cheese +1 SR)', hasFlavor: false },
             { id: 's4', nameEn: 'Jambo Shawarma', nameAr: 'شاورما جامبو', category: 'shawarma', price: 12.00, desc: 'CAL 525', hasFlavor: false },
-            { id: 's5', nameEn: 'Saroukh Cheese', nameAr: 'صاروخ شاورما جبن', category: 'shawarma', price: 13.00, desc: 'Large Saroukh with Cheese', hasFlavor: false },
             { id: 's6', nameEn: 'Shawarma Arabian', nameAr: 'شاورما عربي', category: 'shawarma', price: 15.00, desc: 'CAL 753', hasFlavor: false },
             { id: 's7', nameEn: 'Plate Shawarma', nameAr: 'صحن شاورما', category: 'shawarma', price: 15.00, desc: 'CAL 724', hasFlavor: false },
-            { id: 's8', nameEn: 'Kufi Shawarma 10Pcs', nameAr: 'شاورما كوفي', category: 'shawarma', price: 25.00, desc: 'CAL 1506', hasFlavor: false },
-            { id: 's9', nameEn: 'Tortilla Box Shawarma', nameAr: 'تورتيلا بوكس شاورما', category: 'shawarma', price: 35.00, desc: 'Complete Tortilla Shawarma Box', hasFlavor: false },
+            { id: 's8', nameEn: 'Kufi Shawarma 10Pcs', nameAr: 'شاورما كوفي 10 قطع', category: 'shawarma', price: 25.00, desc: 'CAL 1506', hasFlavor: false },
 
-            // Tortilla
+            // 3. Tortilla (تورتيلا)
             { id: 't1', nameEn: 'Beef Kabab Tortilla', nameAr: 'تورتيلا كباب لحم', category: 'tortilla', price: 12.00, desc: 'CAL 832', hasFlavor: false },
-            { id: 't2', nameEn: 'Chicken Tortilla', nameAr: 'تورتيلا دجاج', category: 'tortilla', price: 12.00, desc: 'Delicious Chicken Tortilla', hasFlavor: true },
+            { id: 't2', nameEn: 'Chicken Tortilla', nameAr: 'تورتيلا دجاج', category: 'tortilla', price: 12.00, desc: 'CAL 806', hasFlavor: true },
             { id: 't3', nameEn: 'Shrimp Tortilla', nameAr: 'تورتيلا روبيان', category: 'tortilla', price: 13.00, desc: 'CAL 832', hasFlavor: true },
             { id: 't4', nameEn: 'Zinger Tortilla', nameAr: 'تورتيلا زنجر', category: 'tortilla', price: 15.00, desc: 'CAL 826', hasFlavor: true },
+            { id: 't5', nameEn: 'Chicken Strip Tortilla', nameAr: 'تورتيلا ستريبس دجاج', category: 'tortilla', price: 10.00, desc: 'CAL 806', hasFlavor: true },
+            { id: 't6', nameEn: 'Chicken Tikka Tortilla', nameAr: 'تورتيلا تكا دجاج', category: 'tortilla', price: 14.00, desc: 'CAL 725', hasFlavor: true },
 
-            // Burgers
-            { id: 'bg1', nameEn: 'Beef Cheese Burger', nameAr: 'برجر لحم بالجبن', category: 'burgers', price: 8.00, desc: 'CAL 856', hasFlavor: false },
-            { id: 'bg2', nameEn: 'Chicken Cheese Burger', nameAr: 'برجر دجاج بالجبن', category: 'burgers', price: 8.00, desc: 'CAL 724', hasFlavor: false },
-            { id: 'bg3', nameEn: 'Zinger Cheese Burger', nameAr: 'برجر زنجر بالجبن', category: 'burgers', price: 12.00, desc: 'CAL 856', hasFlavor: true },
-            { id: 'bg4', nameEn: 'Crunchy Burger', nameAr: 'برجر كرانشي', category: 'burgers', price: 16.00, desc: 'With onion rings & fries', hasFlavor: true },
-
-            // Sandwiches
-            { id: 'sw1', nameEn: 'Strip Sandwich', nameAr: 'ساندوتش ستريبس', category: 'sandwiches', price: 11.00, desc: 'CAL 883', hasFlavor: true },
+            // 4. Sandwiches (ساندويشات)
+            { id: 'sw1', nameEn: 'Chicken Strip Sandwich', nameAr: 'ساندوتش ستريبس دجاج', category: 'sandwiches', price: 11.00, desc: 'CAL 883', hasFlavor: true },
             { id: 'sw2', nameEn: 'Kabab Sandwich', nameAr: 'ساندوتش كباب', category: 'sandwiches', price: 11.00, desc: 'CAL 875', hasFlavor: false },
             { id: 'sw3', nameEn: 'Shrimp Sandwich', nameAr: 'ساندوتش روبيان', category: 'sandwiches', price: 13.00, desc: 'CAL 826', hasFlavor: true },
 
-            // Juices
-            { id: 'j1', nameEn: 'Cocktail Juice Small', nameAr: 'كوكتيل صغير', category: 'juices', price: 5.00, desc: 'Fresh Cocktail', hasFlavor: false },
-            { id: 'j2', nameEn: 'Cocktail Juice', nameAr: 'عصير كوكتيل', category: 'juices', price: 7.00, desc: 'Fresh Cocktail Large', hasFlavor: false },
-            { id: 'j3', nameEn: 'Orange Juice', nameAr: 'عصير برتقال', category: 'juices', price: 7.00, desc: '100% Fresh Orange', hasFlavor: false },
-            { id: 'j4', nameEn: 'Mango Juice', nameAr: 'عصير مانجو', category: 'juices', price: 7.00, desc: 'Fresh Mango', hasFlavor: false },
-            { id: 'j5', nameEn: 'Awar Heart', nameAr: 'عوار قلب', category: 'juices', price: 8.00, desc: 'Special Mix', hasFlavor: false },
-            { id: 'j6', nameEn: 'Avocado Juice', nameAr: 'عصير أفوكادو', category: 'juices', price: 9.00, desc: 'Fresh Avocado', hasFlavor: false },
+            // 5. Burgers (برجر)
+            { id: 'bg1', nameEn: 'Beef Cheese Burger', nameAr: 'برجر لحم بالجبن', category: 'burgers', price: 8.00, desc: 'CAL 856', hasFlavor: false },
+            { id: 'bg2', nameEn: 'Chicken Cheese Burger', nameAr: 'برجر دجاج بالجبن', category: 'burgers', price: 8.00, desc: 'CAL 724', hasFlavor: false },
+            { id: 'bg3', nameEn: 'Zinger Cheese Burger', nameAr: 'برجر زنجر بالجبن', category: 'burgers', price: 12.00, desc: 'CAL 856', hasFlavor: true },
+            { id: 'bg4', nameEn: 'Crunchy Burger', nameAr: 'برجر كرانشي', category: 'burgers', price: 16.00, desc: 'With onion rings, fries & sauce', hasFlavor: true },
 
-            // Drinks
-            { id: 'd1', nameEn: 'Water', nameAr: 'مياه', category: 'drinks', price: 1.00, desc: 'Mineral Water', hasFlavor: false },
-            { id: 'd2', nameEn: 'Pepsi', nameAr: 'بيبسي', category: 'drinks', price: 2.50, desc: 'Soft Drink', hasFlavor: false },
-            { id: 'd3', nameEn: 'Soft Drinks', nameAr: 'مشروبات غازية', category: 'drinks', price: 3.00, desc: '7up / Dew', hasFlavor: false }
+            // 6. Sauces (صلصات)
+            { id: 'sc1', nameEn: 'Garlic Sauce', nameAr: 'صلصة الثوم', category: 'sauces', price: 1.00, desc: 'CAL 95', hasFlavor: false },
+            { id: 'sc2', nameEn: 'Ranch Sauce', nameAr: 'صلصة رانش', category: 'sauces', price: 2.00, desc: 'CAL 82', hasFlavor: false },
+            { id: 'sc3', nameEn: 'BBQ Sauce', nameAr: 'صلصة باربيكيو', category: 'sauces', price: 2.00, desc: 'CAL 86', hasFlavor: false },
+            { id: 'sc4', nameEn: 'Chipotle Sauce', nameAr: 'صلصة شبيوتلي', category: 'sauces', price: 2.00, desc: 'CAL 20', hasFlavor: false },
+            { id: 'sc5', nameEn: 'Dynamite Sauce', nameAr: 'صلصة ديناميت', category: 'sauces', price: 2.00, desc: 'CAL 118', hasFlavor: false },
+            { id: 'sc6', nameEn: 'Cocktail Sauce', nameAr: 'صلصة كوكتيل', category: 'sauces', price: 2.00, desc: 'CAL 118', hasFlavor: false },
+
+            // 7. Sides (طلبات جانبية)
+            { id: 'sd1', nameEn: 'Hummus', nameAr: 'حمص', category: 'sides', price: 3.00, desc: 'CAL 225', hasFlavor: false },
+            { id: 'sd2', nameEn: 'Coleslaw', nameAr: 'كول سلو', category: 'sides', price: 3.00, desc: 'CAL 85', hasFlavor: false },
+            { id: 'sd3', nameEn: 'Onion Rings', nameAr: 'حلقات بصل', category: 'sides', price: 7.00, desc: 'CAL 314', hasFlavor: false },
+            { id: 'sd4', nameEn: 'Wedges Fries', nameAr: 'ودجز', category: 'sides', price: 7.00, desc: 'CAL 369', hasFlavor: false },
+            { id: 'sd5', nameEn: 'French Fries', nameAr: 'بطاطس مقلية', category: 'sides', price: 4.00, desc: 'Regular French Fries', hasFlavor: false },
+            { id: 'sd6', nameEn: 'Mozzarella Sticks', nameAr: 'أصابع موزاريلا', category: 'sides', price: 8.00, desc: 'Crispy Mozzarella Sticks', hasFlavor: false },
+
+            // 8. Juices (عصير طازج)
+            { id: 'j1', nameEn: 'Cocktail Juice', nameAr: 'عصير كوكتيل', category: 'juices', hasSizes: true, sizes: [ {labelEn: 'Med (وسط)', labelAr: 'وسط', price: 7.00}, {labelEn: 'Big (كبير)', labelAr: 'كبير', price: 8.00}, {labelEn: 'Gallon 1.5L (جالون)', labelAr: 'جالون', price: 20.00} ] },
+            { id: 'j2', nameEn: 'Guava Juice', nameAr: 'عصير جوافة', category: 'juices', hasSizes: true, sizes: [ {labelEn: 'Med (وسط)', labelAr: 'وسط', price: 7.00}, {labelEn: 'Big (كبير)', labelAr: 'كبير', price: 8.00} ] },
+            { id: 'j3', nameEn: 'Lemon Juice', nameAr: 'عصير ليمون', category: 'juices', hasSizes: true, sizes: [ {labelEn: 'Med (وسط)', labelAr: 'وسط', price: 7.00}, {labelEn: 'Big (كبير)', labelAr: 'كبير', price: 8.00} ] },
+            { id: 'j4', nameEn: 'Orange Juice', nameAr: 'عصير برتقال', category: 'juices', hasSizes: true, sizes: [ {labelEn: 'Med (وسط)', labelAr: 'وسط', price: 7.00}, {labelEn: 'Big (كبير)', labelAr: 'كبير', price: 8.00}, {labelEn: 'Gallon 1.5L (جالون)', labelAr: 'جالون', price: 28.00} ] },
+            { id: 'j5', nameEn: 'Banana Milk Juice', nameAr: 'عصير موز بالحليب', category: 'juices', hasSizes: true, sizes: [ {labelEn: 'Med (وسط)', labelAr: 'وسط', price: 7.00}, {labelEn: 'Big (كبير)', labelAr: 'كبير', price: 8.00} ] },
+            { id: 'j6', nameEn: 'Apple Juice', nameAr: 'عصير تفاح', category: 'juices', hasSizes: true, sizes: [ {labelEn: 'Med (وسط)', labelAr: 'وسط', price: 7.00}, {labelEn: 'Big (كبير)', labelAr: 'كبير', price: 8.00} ] },
+            { id: 'j7', nameEn: 'Mango Juice', nameAr: 'عصير مانجو', category: 'juices', hasSizes: true, sizes: [ {labelEn: 'Med (وسط)', labelAr: 'وسط', price: 7.00}, {labelEn: 'Big (كبير)', labelAr: 'كبير', price: 8.00} ] },
+            { id: 'j8', nameEn: 'Cantaloupe Juice', nameAr: 'عصير شمام', category: 'juices', hasSizes: true, sizes: [ {labelEn: 'Med (وسط)', labelAr: 'وسط', price: 7.00}, {labelEn: 'Big (كبير)', labelAr: 'كبير', price: 8.00} ] },
+            { id: 'j9', nameEn: 'Awar Heart Juice', nameAr: 'عصير عوار قلب', category: 'juices', hasSizes: true, sizes: [ {labelEn: 'Med (وسط)', labelAr: 'وسط', price: 8.00}, {labelEn: 'Big (كبير)', labelAr: 'كبير', price: 9.00} ] },
+            { id: 'j10', nameEn: 'Pomegranate Juice', nameAr: 'عصير رمان', category: 'juices', hasSizes: true, sizes: [ {labelEn: 'Big (كبير)', labelAr: 'كبير', price: 9.00}, {labelEn: 'Gallon 1.5L (جالون)', labelAr: 'جالون', price: 25.00} ] },
+            { id: 'j11', nameEn: 'Avocado Juice', nameAr: 'عصير أفوكادو', category: 'juices', hasSizes: true, sizes: [ {labelEn: 'Med (وسط)', labelAr: 'وسط', price: 9.00}, {labelEn: 'Big (كبير)', labelAr: 'كبير', price: 10.00}, {labelEn: 'Gallon 1.5L (جالون)', labelAr: 'جالون', price: 28.00} ] },
+            { id: 'j12', nameEn: 'Orange Squeeze Juice', nameAr: 'عصير برتقال كبس', category: 'juices', hasSizes: true, sizes: [ {labelEn: 'Med (وسط)', labelAr: 'وسط', price: 9.00}, {labelEn: 'Big (كبير)', labelAr: 'كبير', price: 10.00} ] },
+            { id: 'j13', nameEn: 'Layers Juice', nameAr: 'عصير طبقات', category: 'juices', hasSizes: true, sizes: [ {labelEn: 'Med (وسط)', labelAr: 'وسط', price: 9.00}, {labelEn: 'Big (كبير)', labelAr: 'كبير', price: 10.00} ] },
+
+            // 9. Soft Drinks (مشروبات غازية)
+            { id: 'd1', nameEn: 'Water', nameAr: 'مياه', category: 'drinks', price: 1.00, desc: 'Bottled Water', hasFlavor: false },
+            { id: 'd2', nameEn: 'Soft Drinks (Can)', nameAr: 'مشروبات غازية (علبة)', category: 'drinks', price: 3.00, desc: 'Pepsi / 7up / Dew / Citrus / Miranda', hasFlavor: false }
         ];
 
         let cart = {};
@@ -592,20 +633,39 @@
 
             let html = '<div class="menu-grid">';
             filtered.forEach(item => {
+                let optionsHtml = '';
+                let defaultPrice = item.price ? item.price.toFixed(2) + ' SR' : '';
+
+                if (item.hasFlavor) {
+                    optionsHtml = `
+                        <div class="option-selection">
+                            <label><input type="radio" name="opt_${item.id}" value="Spicy" checked> Spicy (حراق)</label>
+                            <label><input type="radio" name="opt_${item.id}" value="Normal"> Normal (عادي)</label>
+                        </div>
+                    `;
+                } else if (item.hasSizes) {
+                    optionsHtml = '<div class="option-selection">';
+                    item.sizes.forEach((sz, idx) => {
+                        optionsHtml += `
+                            <label>
+                                <input type="radio" name="opt_${item.id}" value="${idx}" ${idx === 0 ? 'checked' : ''} onchange="updateItemPriceDisplay('${item.id}', ${sz.price})"> 
+                                ${sz.labelEn} / ${sz.labelAr} - ${sz.price} SR
+                            </label><br>
+                        `;
+                    });
+                    optionsHtml += '</div>';
+                    defaultPrice = item.sizes[0].price.toFixed(2) + ' SR';
+                }
+
                 html += `
                     <div class="item-card">
                         <div class="item-info">
                             <h3>${item.nameEn} - ${item.nameAr}</h3>
-                            <p>${item.desc}</p>
-                            ${item.hasFlavor ? `
-                                <div class="flavor-selection">
-                                    <label><input type="radio" name="flavor_${item.id}" value="Spicy" checked> Spicy (حراق)</label>
-                                    <label><input type="radio" name="flavor_${item.id}" value="Normal"> Normal (عادي)</label>
-                                </div>
-                            ` : ''}
+                            <p>${item.desc || ''}</p>
+                            ${optionsHtml}
                         </div>
                         <div class="item-bottom">
-                            <span class="item-price">${item.price.toFixed(2)} SAR</span>
+                            <span class="item-price" id="price_disp_${item.id}">${defaultPrice}</span>
                             <button class="add-btn" onclick="addToCart('${item.id}')">
                                 + Add / إضافة
                             </button>
@@ -617,40 +677,61 @@
             container.innerHTML = html;
         }
 
+        function updateItemPriceDisplay(itemId, price) {
+            const el = document.getElementById(`price_disp_${itemId}`);
+            if (el) el.innerText = price.toFixed(2) + ' SR';
+        }
+
         function filterCategory(cat, event) {
             document.querySelectorAll('.cat-btn').forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
+            let targetBtn = event.currentTarget || event.target;
+            if(!targetBtn.classList.contains('cat-btn')) targetBtn = targetBtn.closest('.cat-btn');
+            targetBtn.classList.add('active');
             renderMenu(cat);
         }
 
         function addToCart(id) {
             const item = menuItems.find(i => i.id === id);
-            let flavorEn = '';
-            let flavorAr = '';
+            let optKey = '';
+            let optEn = '';
+            let optAr = '';
+            let finalPrice = item.price || 0;
 
             if (item.hasFlavor) {
-                const selectedRadio = document.querySelector(`input[name="flavor_${id}"]:checked`);
-                if (selectedRadio) {
-                    if (selectedRadio.value === 'Spicy') {
-                        flavorEn = ' Spicy';
-                        flavorAr = ' حراق';
+                const selected = document.querySelector(`input[name="opt_${id}"]:checked`);
+                if (selected) {
+                    if (selected.value === 'Spicy') {
+                        optEn = ' (Spicy)';
+                        optAr = ' (حراق)';
+                        optKey = '_spicy';
                     } else {
-                        flavorEn = ' Normal';
-                        flavorAr = ' عادي';
+                        optEn = ' (Normal)';
+                        optAr = ' (عادي)';
+                        optKey = '_normal';
                     }
+                }
+            } else if (item.hasSizes) {
+                const selected = document.querySelector(`input[name="opt_${id}"]:checked`);
+                if (selected) {
+                    const idx = parseInt(selected.value);
+                    const sz = item.sizes[idx];
+                    finalPrice = sz.price;
+                    optEn = ` (${sz.labelEn})`;
+                    optAr = ` (${sz.labelAr})`;
+                    optKey = `_sz_${idx}`;
                 }
             }
 
-            const cartKey = id + flavorEn;
+            const cartKey = id + optKey;
 
             if (cart[cartKey]) {
                 cart[cartKey].qty++;
             } else {
                 cart[cartKey] = {
                     id: id,
-                    nameEn: item.nameEn + flavorEn,
-                    nameAr: item.nameAr + flavorAr,
-                    price: item.price,
+                    nameEn: item.nameEn + optEn,
+                    nameAr: item.nameAr + optAr,
+                    price: finalPrice,
                     qty: 1
                 };
             }
@@ -678,7 +759,7 @@
                     <div class="cart-item-row">
                         <div>
                             <strong>${item.nameEn} / ${item.nameAr}</strong><br>
-                            <small>${item.price.toFixed(2)} SAR × ${item.qty} = ${itemTotal.toFixed(2)} SAR</small>
+                            <small>${item.price.toFixed(2)} SR × ${item.qty} = ${itemTotal.toFixed(2)} SR</small>
                         </div>
                         <div class="qty-controls">
                             <button class="qty-btn" onclick="changeQty('${key}', -1)">-</button>
@@ -689,8 +770,8 @@
                 `;
             }
 
-            document.getElementById('cart-total-display').innerText = total.toFixed(2) + ' SAR';
-            document.getElementById('final-total-val').innerText = total.toFixed(2) + ' SAR';
+            document.getElementById('cart-total-display').innerText = total.toFixed(2) + ' SR';
+            document.getElementById('final-total-val').innerText = total.toFixed(2) + ' SR';
             document.getElementById('cart-items-list').innerHTML = cartListHtml || '<p style="text-align:center; color:#888;">Cart is empty / السلة فارغة</p>';
         }
 
@@ -718,7 +799,6 @@
             }
         }
 
-        // Convert English digits to Arabic digits
         function toArabicDigits(str) {
             return String(str).replace(/[0-9]/g, d => '٠١٢٣٤٥٦٧٨٩'[d]);
         }
@@ -750,14 +830,14 @@
                 const qtyAr = toArabicDigits(item.qty);
                 const itemTotalAr = toArabicDigits(itemTotal.toFixed(2));
 
-                msg += `${item.qty} . ${item.nameEn} - ${itemTotal.toFixed(2)} SAR\n`;
+                msg += `${item.qty} . ${item.nameEn} - ${itemTotal.toFixed(2)} SR\n`;
                 msg += `${qtyAr} . ${item.nameAr} - ${itemTotalAr} ر.س\n\n`;
             }
 
             const totalAr = toArabicDigits(total.toFixed(2));
 
             msg += `-------------------------------------\n--\n`;
-            msg += ` TOTAL AMOUNT: ${total.toFixed(2)} SAR\n`;
+            msg += ` TOTAL AMOUNT: ${total.toFixed(2)} SR\n`;
             msg += ` المبلغ الإجمالي: ${totalAr} ر.س\n`;
             msg += `-------------------------------------\n--\n\n`;
 
