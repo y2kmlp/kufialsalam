@@ -3,411 +3,650 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kufi Broasted - كوفي بروستد</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <title>كوفي بروستد - Kufi Broasted</title>
+    <!-- Google Fonts & FontAwesome -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <style>
         :root {
-            --primary-red: #D32F2F;
-            --dark-red: #9A0007;
-            --accent-yellow: #FFC107;
-            --bg-light: #F9F9F9;
-            --text-dark: #212121;
-            --white: #FFFFFF;
+            --primary: #d32f2f;
+            --primary-dark: #b71c1c;
+            --secondary: #ffffff;
+            --bg-light: #f8f9fa;
+            --text-color: #212529;
+            --gray-light: #e0e0e0;
+            --shadow: 0 4px 12px rgba(0,0,0,0.1);
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Cairo', sans-serif;
         }
 
         body {
             background-color: var(--bg-light);
-            color: var(--text-dark);
+            color: var(--text-color);
             padding-bottom: 90px;
         }
 
         /* Announcement Bar */
         .announcement-bar {
-            background-color: var(--dark-red);
-            color: var(--white);
+            background-color: var(--primary-dark);
+            color: white;
             text-align: center;
-            padding: 8px;
+            padding: 8px 15px;
             font-size: 14px;
-            font-weight: bold;
-            overflow: hidden;
-            white-space: nowrap;
-        }
-        .announcement-text {
-            display: inline-block;
-            animation: scrollText 15s linear infinite;
-        }
-        @keyframes scrollText {
-            0% { transform: translateX(-100%); }
-            100% { transform: translateX(100%); }
+            font-weight: 600;
         }
 
-        /* Header Section */
-        .header {
-            background: linear-gradient(135deg, var(--primary-red), var(--dark-red));
-            color: var(--white);
-            padding: 20px 15px;
-            text-align: center;
-            border-bottom-left-radius: 25px;
-            border-bottom-right-radius: 25px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-        }
-
-        .logo {
-            width: 100px;
-            height: 100px;
-            background: var(--white);
-            border-radius: 50%;
-            padding: 5px;
-            margin: 0 auto 10px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-        }
-
-        .logo img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-        }
-
-        .restaurant-name {
-            font-size: 24px;
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
-
-        .store-status {
-            display: inline-block;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 13px;
-            font-weight: bold;
-            margin-top: 5px;
-        }
-        .open { background-color: #2E7D32; color: white; }
-        .closed { background-color: #C62828; color: white; }
-
-        .time-info {
-            font-size: 12px;
-            margin-top: 5px;
-            opacity: 0.9;
-        }
-
-        /* Category Nav */
-        .category-container {
+        /* Header & Logo */
+        header {
+            background-color: var(--secondary);
+            box-shadow: var(--shadow);
+            padding: 15px 20px;
             display: flex;
-            overflow-x: auto;
-            padding: 15px 10px;
-            gap: 10px;
-            background: var(--white);
+            align-items: center;
+            justify-content: space-between;
             position: sticky;
             top: 0;
             z-index: 100;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
         }
 
-        .category-btn {
-            background-color: #F0F0F0;
-            border: none;
-            padding: 8px 16px;
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-container img {
+            height: 55px;
+            width: auto;
+            border-radius: 8px;
+        }
+
+        .brand-details h1 {
+            font-size: 20px;
+            color: var(--primary);
+            line-height: 1.2;
+        }
+
+        .brand-details p {
+            font-size: 12px;
+            color: #666;
+        }
+
+        .store-status {
+            padding: 5px 12px;
             border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .status-open {
+            background-color: #e8f5e9;
+            color: #2e7d32;
+        }
+
+        .status-closed {
+            background-color: #ffebee;
+            color: #c62828;
+        }
+
+        /* Category Nav */
+        .category-nav {
+            display: flex;
+            overflow-x: auto;
+            background: white;
+            padding: 12px 15px;
+            gap: 10px;
+            border-bottom: 1px solid var(--gray-light);
             white-space: nowrap;
-            font-weight: bold;
-            color: var(--text-dark);
+        }
+
+        .category-nav::-webkit-scrollbar {
+            display: none;
+        }
+
+        .cat-btn {
+            padding: 8px 18px;
+            border: 1px solid var(--gray-light);
+            border-radius: 25px;
+            background: white;
+            color: var(--text-color);
+            font-weight: 600;
             cursor: pointer;
             transition: 0.3s;
         }
 
-        .category-btn.active {
-            background-color: var(--primary-red);
-            color: var(--white);
+        .cat-btn.active, .cat-btn:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
         }
 
-        /* Menu Section */
-        .menu-container {
-            padding: 15px;
-            max-width: 600px;
-            margin: 0 auto;
+        /* Menu Container */
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 0 15px;
         }
 
-        .category-title {
-            font-size: 18px;
-            color: var(--primary-red);
-            margin: 20px 0 10px;
-            border-bottom: 2px solid var(--primary-red);
-            padding-bottom: 5px;
+        .section-title {
+            font-size: 22px;
+            color: var(--primary);
+            margin: 25px 0 15px 0;
+            border-right: 4px solid var(--primary);
+            padding-right: 10px;
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 15px;
         }
 
         .item-card {
-            background: var(--white);
+            background: white;
             border-radius: 12px;
-            padding: 12px;
-            margin-bottom: 12px;
+            padding: 15px;
+            box-shadow: var(--shadow);
             display: flex;
-            gap: 12px;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
         }
 
-        .item-img {
-            width: 85px;
-            height: 85px;
-            border-radius: 8px;
-            object-fit: cover;
-            background: #eee;
+        .item-card.sold-out {
+            opacity: 0.6;
         }
 
-        .item-details {
-            flex: 1;
-        }
-
-        .item-title {
+        .item-card.sold-out::after {
+            content: "غير متوفر (Sold Out)";
+            position: absolute;
+            top: 40%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(211, 47, 47, 0.9);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 5px;
             font-weight: bold;
-            font-size: 15px;
+            font-size: 13px;
+        }
+
+        .item-info h3 {
+            font-size: 16px;
             margin-bottom: 4px;
         }
 
-        .item-price {
-            color: var(--primary-red);
-            font-weight: bold;
-            font-size: 14px;
-            margin-bottom: 8px;
-        }
-
-        /* Options / Radio Buttons */
-        .options-group {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 8px;
+        .item-info p {
             font-size: 12px;
+            color: #777;
+            margin-bottom: 10px;
         }
 
-        .option-label {
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            cursor: pointer;
-            background: #f5f5f5;
-            padding: 4px 8px;
-            border-radius: 6px;
-        }
-
-        .add-cart-btn {
-            background-color: var(--primary-red);
-            color: var(--white);
-            border: none;
-            padding: 6px 12px;
-            border-radius: 6px;
-            font-weight: bold;
-            cursor: pointer;
-            width: 100%;
-            margin-top: 5px;
-        }
-
-        /* Cart Floating Button */
-        .cart-float {
-            position: fixed;
-            bottom: 20px;
-            left: 20px;
-            right: 20px;
-            max-width: 560px;
-            margin: 0 auto;
-            background-color: #2E7D32;
-            color: white;
-            padding: 12px 20px;
-            border-radius: 30px;
+        .item-bottom {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-            font-weight: bold;
-            cursor: pointer;
+            margin-top: 10px;
         }
 
-        /* Footer */
-        .footer {
-            background: #111;
-            color: #ccc;
-            text-align: center;
-            padding: 20px;
-            margin-top: 30px;
-            font-size: 13px;
+        .item-price {
+            font-weight: 700;
+            color: var(--primary-dark);
+            font-size: 16px;
         }
-        .footer h4 { color: white; margin-bottom: 10px; }
-        .branches { margin-top: 10px; font-size: 12px; color: #aaa; }
+
+        .add-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 6px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: 0.2s;
+        }
+
+        .add-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        /* Cart Floating Footer Bar */
+        .cart-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            padding: 12px 20px;
+            box-shadow: 0 -4px 15px rgba(0,0,0,0.15);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .cart-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .cart-total {
+            font-size: 18px;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .checkout-btn {
+            background: #25D366;
+            color: white;
+            border: none;
+            padding: 10px 24px;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Modal Overlay */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.6);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            padding: 15px;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            width: 100%;
+            max-width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+        }
+
+        .form-group {
+            margin-bottom: 12px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+        }
+
+        .cart-item-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .qty-controls {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .qty-btn {
+            background: #eee;
+            border: none;
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
 
     <!-- Announcement Bar -->
     <div class="announcement-bar">
-        <span class="announcement-text">🔥 أهلاً بكم في كوفي بروستد - أشهى الوجبات السريعة والشاورما | الفرع الرئيسي: السلام، الرياض 🔥</span>
+        الفرع الرئيسي: السلام، الرياض | أوقات العمل: 12:30 مساءً - 1:30 صباحاً
     </div>
 
-    <!-- Header Section -->
-    <div class="header">
-        <div class="logo">
-            <!-- ലോഗോ ഇമേജ് ഇവിടെ ചേർക്കുക -->
-            <img src="logo.png" alt="Kufi Broasted" onerror="this.src='https://via.placeholder.com/100?text=KUFI'">
+    <!-- Header -->
+    <header>
+        <div class="logo-container">
+            <img src="logo.png" alt="كوفي بروستد" onerror="this.src='https://via.placeholder.com/55?text=Kufi'">
+            <div class="brand-details">
+                <h1>كوفي بروستد</h1>
+                <p>Kufi Broasted - Al Salam</p>
+            </div>
         </div>
-        <div class="restaurant-name">كوفي بروستد (Kufi Broasted)</div>
-        <div id="status-badge" class="store-status open">مفتوح الآن (Open)</div>
-        <div class="time-info"><i class="far fa-clock"></i> 12:00 PM - 02:00 AM</div>
+        <div id="store-status-badge" class="store-status status-open">...</div>
+    </header>
+
+    <!-- Category Navigation -->
+    <div class="category-nav">
+        <button class="cat-btn active" onclick="filterCategory('all')">الكل (All)</button>
+        <button class="cat-btn" onclick="filterCategory('broasted')">بروستد (Broasted)</button>
+        <button class="cat-btn" onclick="filterCategory('shawarma')">شاورما (Shawarma)</button>
+        <button class="cat-btn" onclick="filterCategory('tortilla')">تورتيلا (Tortilla)</button>
+        <button class="cat-btn" onclick="filterCategory('burgers')">برجر (Burgers)</button>
+        <button class="cat-btn" onclick="filterCategory('sandwiches')">ساندويشات (Sandwiches)</button>
+        <button class="cat-btn" onclick="filterCategory('juices')">عصير طازج (Juices)</button>
+        <button class="cat-btn" onclick="filterCategory('drinks')">مشروبات (Drinks)</button>
     </div>
 
-    <!-- Categories Navigation -->
-    <div class="category-container">
-        <button class="category-btn active" onclick="filterCategory('all')">الكل (All)</button>
-        <button class="category-btn" onclick="filterCategory('shawarma')">شاورما (Shawarma)</button>
-        <button class="category-btn" onclick="filterCategory('broasted')">بروستد (Broasted)</button>
-        <button class="category-btn" onclick="filterCategory('burger')">برجر (Burgers)</button>
-        <button class="category-btn" onclick="filterCategory('tortilla')">تورتيلا (Tortilla)</button>
-        <button class="category-btn" onclick="filterCategory('sandwiches')">ساندويشات (Sandwiches)</button>
-        <button class="category-btn" onclick="filterCategory('juices')">عصيرات (Juices)</button>
-        <button class="category-btn" onclick="filterCategory('sides')">طلبات جانبية (Sides)</button>
+    <!-- Main Container -->
+    <div class="container" id="menu-container">
+        <!-- Menu Items loaded by JS -->
     </div>
 
-    <!-- Menu Items Container -->
-    <div class="menu-container">
+    <!-- Cart Floating Bar -->
+    <div class="cart-bar">
+        <div class="cart-info">
+            <span style="font-size: 12px; color: #666;">الإجمالي (Total):</span>
+            <span class="cart-total" id="cart-total-display">0 SR</span>
+        </div>
+        <button class="checkout-btn" onclick="openCheckoutModal()">
+            <i class="fab fa-whatsapp"></i> إرسال الطلب
+        </button>
+    </div>
 
-        <!-- 1. Shawarma Category -->
-        <div class="category-section" id="shawarma">
-            <h3 class="category-title">شاورما (Shawarma)</h3>
-            
-            <div class="item-card">
-                <img src="https://via.placeholder.com/85?text=Shawarma" class="item-img" alt="Shawarma">
-                <div class="item-details">
-                    <div class="item-title">شاورما كوفي (Kufi Shawarma 10Pcs)</div>
-                    <div class="item-price">25 SR</div>
-                    <button class="add-cart-btn" onclick="addToCart('Kufi Shawarma 10Pcs', 25)">إضافة للسلة (Add)</button>
+    <!-- Checkout Modal -->
+    <div class="modal" id="checkout-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>تفاصيل الطلب (Checkout)</h3>
+                <span style="cursor:pointer;" onclick="closeCheckoutModal()">&times;</span>
+            </div>
+
+            <div id="cart-items-list">
+                <!-- Cart items list here -->
+            </div>
+
+            <hr style="margin: 15px 0;">
+
+            <div class="form-group">
+                <label>مسافة التوصيل (Delivery Distance):</label>
+                <select id="delivery-distance" onchange="updateCartUI()">
+                    <option value="3">0 - 2 كم (3 SR)</option>
+                    <option value="5">2 - 4 كم (5 SR)</option>
+                    <option value="8">4 - 6 كم (8 SR)</option>
+                    <option value="10">6 - 8 كم (10 SR)</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>الاسم (Name):</label>
+                <input type="text" id="cust-name" placeholder="اسمك الكريم">
+            </div>
+
+            <div class="form-group">
+                <label>العنوان / الحي (Address):</label>
+                <input type="text" id="cust-address" placeholder="اسم الحي والشارع">
+            </div>
+
+            <div style="background: #f9f9f9; padding: 10px; border-radius: 6px; margin-top: 10px;">
+                <div style="display:flex; justify-shadow:space-between; font-size:14px; margin-bottom:4px;">
+                    <span>مجموع الوجبات:</span>
+                    <span id="subtotal-val">0 SR</span>
+                </div>
+                <div style="display:flex; justify-shadow:space-between; font-size:14px; margin-bottom:4px;">
+                    <span>رسوم التوصيل:</span>
+                    <span id="delivery-val">3 SR</span>
+                </div>
+                <div style="display:flex; justify-shadow:space-between; font-weight:bold; font-size:16px; color:var(--primary);">
+                    <span>المبلغ الإجمالي:</span>
+                    <span id="final-total-val">3 SR</span>
                 </div>
             </div>
 
-            <div class="item-card">
-                <img src="https://via.placeholder.com/85?text=Saroukh" class="item-img" alt="Saroukh">
-                <div class="item-details">
-                    <div class="item-title">صاروخ صاج (Saroukh Saj)</div>
-                    <div class="item-price">12 SR</div>
-                    <div class="options-group">
-                        <label class="option-label"><input type="checkbox" id="cheese-saj"> + جبنة (Cheese) 1 SR</label>
-                    </div>
-                    <button class="add-cart-btn" onclick="addSaroukhToCart()">إضافة للسلة (Add)</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- 2. Broasted Category -->
-        <div class="category-section" id="broasted">
-            <h3 class="category-title">بروستد (Broasted & Fried Chicken)</h3>
-            
-            <div class="item-card">
-                <img src="https://via.placeholder.com/85?text=Broasted" class="item-img" alt="Broasted">
-                <div class="item-details">
-                    <div class="item-title">بروستد دجاج 4 قطع (Chicken Broasted 4Pcs)</div>
-                    <div class="item-price">20 SR</div>
-                    <div class="options-group">
-                        <label class="option-label"><input type="radio" name="flavour-broasted" value="Regular" checked> عادي (Regular)</label>
-                        <label class="option-label"><input type="radio" name="flavour-broasted" value="Spicy"> حراق (Spicy)</label>
-                    </div>
-                    <button class="add-cart-btn" onclick="addToCartWithOptions('Chicken Broasted 4Pcs', 20, 'flavour-broasted')">إضافة للسلة (Add)</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- 3. Fresh Juices Category -->
-        <div class="category-section" id="juices">
-            <h3 class="category-title">عصير طازج (Fresh Juices)</h3>
-            
-            <div class="item-card">
-                <img src="https://via.placeholder.com/85?text=Juice" class="item-img" alt="Juice">
-                <div class="item-details">
-                    <div class="item-title">عصير كوكتيل (Cocktail Juice)</div>
-                    <div class="options-group" style="margin-top: 5px;">
-                        <label class="option-label"><input type="radio" name="cocktail-size" value="Medium - 7 SR" checked> وسط (7 SR)</label>
-                        <label class="option-label"><input type="radio" name="cocktail-size" value="Big - 8 SR"> كبير (8 SR)</label>
-                    </div>
-                    <button class="add-cart-btn" onclick="addJuiceToCart('Cocktail Juice', 'cocktail-size')">إضافة للسلة (Add)</button>
-                </div>
-            </div>
-        </div>
-
-    </div>
-
-    <!-- Floating Cart Button -->
-    <div class="cart-float" onclick="sendToWhatsApp()">
-        <div><i class="fas fa-shopping-cart"></i> السلة (<span id="cart-count">0</span>)</div>
-        <div>إرسال الطلب عبر الواتساب <i class="fab fa-whatsapp"></i></div>
-    </div>
-
-    <!-- Footer Section -->
-    <div class="footer">
-        <h4>كوفي بروستد - Kufi Broasted</h4>
-        <p>الرياض - حي السلام (Al Salam, Riyadh)</p>
-        <div class="branches">
-            <b>فروعنا الأخرى (Other Branches):</b><br>
-            البطحاء (Batha) | الملز (Malaz) | طريق المطار (Airport Road)
+            <button class="checkout-btn" style="width: 100%; margin-top: 15px; justify-content: center;" onclick="sendOrderWhatsApp()">
+                <i class="fab fa-whatsapp"></i> تأكيد وإرسال عبر الواتساب
+            </button>
         </div>
     </div>
 
     <script>
-        let cart = [];
+        // Menu Data
+        const menuItems = [
+            // Shawarma[cite: 1, 2]
+            { id: 's1', name: 'شاورما جبن (Shawarma Cheese)', category: 'shawarma', price: 7, desc: 'شاورما دجاج مع الجبن', soldOut: false },
+            { id: 's2', name: 'صاروخ شاورما جبن (Saroukh Cheese)', category: 'shawarma', price: 13, desc: 'صاروخ شاورما حجم كبير مع الجبن', soldOut: false },
+            { id: 's3', name: 'تورتيلا بوكس شاورما (Tortilla Box)', category: 'shawarma', price: 35, desc: 'بوكس شاورما تورتيلا متكامل', soldOut: false },
+            { id: 's4', name: 'ساندوتش شاورما (Shawarma Sandwich)', category: 'shawarma', price: 6, desc: 'CAL 352', soldOut: false },
+            { id: 's5', name: 'صاروخ صاج (Saroukh Saj)', category: 'shawarma', price: 12, desc: 'CAL 676 (إضافة جبن +1 SR)', soldOut: false },
+            { id: 's6', name: 'شاورما جامبو (Jambo Shawarma)', category: 'shawarma', price: 12, desc: 'CAL 525', soldOut: false },
+            { id: 's7', name: 'شاورما عربي (Shawarma Arabian)', category: 'shawarma', price: 15, desc: 'CAL 753', soldOut: false },
+            { id: 's8', name: 'صحن شاورما (Plate Shawarma)', category: 'shawarma', price: 15, desc: 'CAL 724', soldOut: false },
+            { id: 's9', name: 'شاورما كوفي (Kufi Shawarma 10Pcs)', category: 'shawarma', price: 25, desc: 'CAL 1506', soldOut: false },
 
-        function addToCart(name, price) {
-            cart.push({ name: name, price: price });
-            updateCart();
+            // Broasted[cite: 5]
+            { id: 'b1', name: 'بروستد دجاج 4 قطع (Chicken Broasted)', category: 'broasted', price: 20, desc: 'عادي / حراق CAL 1745', soldOut: false },
+            { id: 'b2', name: 'زنجر دجاج 4 قطع (Chicken Zinger)', category: 'broasted', price: 23, desc: 'عادي / حراق CAL 1873', soldOut: false },
+            { id: 'b3', name: 'بروستد سمك (Fish Broasted 1Pcs)', category: 'broasted', price: 20, desc: 'CAL 1885', soldOut: false },
+            { id: 'b4', name: 'ناجت دجاج 12 قطعة (Chicken Nuggets)', category: 'broasted', price: 20, desc: 'CAL 1873', soldOut: false },
+            { id: 'b5', name: 'مسحب دجاج 10 قطع (Chicken Boneless)', category: 'broasted', price: 20, desc: 'CAL 1840', soldOut: false },
+            { id: 'b6', name: 'ستريبس دجاج 6 قطع (Chicken Strips)', category: 'broasted', price: 20, desc: 'CAL 1875', soldOut: false },
+            { id: 'b7', name: 'بروستد روبيان 12 قطعة (Shrimp Broasted)', category: 'broasted', price: 23, desc: 'CAL 1719', soldOut: false },
+
+            // Burgers[cite: 3]
+            { id: 'bg1', name: 'برجر زنجر بالجبن (Zinger Cheese)', category: 'burgers', price: 12, desc: 'CAL 856', soldOut: false },
+            { id: 'bg2', name: 'برجر كرانشي (Crunchy Burger)', category: 'burgers', price: 16, desc: 'مع حلقات البصل والبطاطس', soldOut: false },
+            { id: 'bg3', name: 'برجر لحم بالجبن (Beef Cheese)', category: 'burgers', price: 8, desc: 'CAL 856', soldOut: false },
+            { id: 'bg4', name: 'برجر دجاج بالجبن (Chicken Cheese)', category: 'burgers', price: 8, desc: 'CAL 724', soldOut: false },
+
+            // Tortilla[cite: 4]
+            { id: 't1', name: 'تورتيلا كباب لحم (Beef Kabab Tortilla)', category: 'tortilla', price: 12, desc: 'CAL 832', soldOut: false },
+            { id: 't2', name: 'تورتيلا دجاج (Chicken Tortilla)', category: 'tortilla', price: 12, desc: 'عادي (12) / حراق (13)', soldOut: false },
+            { id: 't3', name: 'تورتيلا روبيان (Shrimp Tortilla)', category: 'tortilla', price: 13, desc: 'CAL 832', soldOut: false },
+            { id: 't4', name: 'تورتيلا زنجر (Zinger Tortilla)', category: 'tortilla', price: 15, desc: 'CAL 826', soldOut: false },
+
+            // Sandwiches
+            { id: 'sw1', name: 'ساندوتش ستريبس (Strip Sandwich)', category: 'sandwiches', price: 11, desc: 'CAL 883', soldOut: false },
+            { id: 'sw2', name: 'ساندوتش روبيان (Shrimp Sandwich)', category: 'sandwiches', price: 13, desc: 'CAL 826', soldOut: false },
+            { id: 'sw3', name: 'ساندوتش كباب (Kabab Sandwich)', category: 'sandwiches', price: 11, desc: 'CAL 875', soldOut: false },
+
+            // Fresh Juices[cite: 2]
+            { id: 'j1', name: 'عصير كوكتيل (Cocktail)', category: 'juices', price: 7, desc: 'وسط (7 SR) / كبير (8 SR)', soldOut: false },
+            { id: 'j2', name: 'عصير برتقال (Orange)', category: 'juices', price: 7, desc: 'وسط (7 SR) / كبير (8 SR)', soldOut: false },
+            { id: 'j3', name: 'عصير مانجو (Mango)', category: 'juices', price: 7, desc: 'وسط (7 SR) / كبير (8 SR)', soldOut: false },
+            { id: 'j4', name: 'عوار قلب (Awar Heart)', category: 'juices', price: 8, desc: 'وسط (8 SR) / كبير (9 SR)', soldOut: false },
+            { id: 'j5', name: 'عصير أفوكادو (Avocado)', category: 'juices', price: 9, desc: 'وسط (9 SR) / كبير (10 SR)', soldOut: false },
+
+            // Drinks[cite: 2]
+            { id: 'd1', name: 'مشروبات غازية (Soft Drinks)', category: 'drinks', price: 3, desc: 'بيبسي / سفن / ديو', soldOut: false },
+            { id: 'd2', name: 'مياه (Water)', category: 'drinks', price: 1, desc: 'مياه صحية', soldOut: false }
+        ];
+
+        let cart = {};
+
+        // Load & Display Items
+        function renderMenu(category = 'all') {
+            const container = document.getElementById('menu-container');
+            container.innerHTML = '';
+
+            const filtered = category === 'all' ? menuItems : menuItems.filter(i => i.category === category);
+
+            let html = '<div class="menu-grid">';
+            filtered.forEach(item => {
+                const isSoldOut = item.soldOut ? 'sold-out' : '';
+                html += `
+                    <div class="item-card ${isSoldOut}">
+                        <div class="item-info">
+                            <h3>${item.name}</h3>
+                            <p>${item.desc}</p>
+                        </div>
+                        <div class="item-bottom">
+                            <span class="item-price">${item.price} SR</span>
+                            <button class="add-btn" onclick="addToCart('${item.id}')" ${item.soldOut ? 'disabled' : ''}>
+                                + إضافة
+                            </button>
+                        </div>
+                    </div>
+                `;
+            });
+            html += '</div>';
+            container.innerHTML = html;
         }
 
-        function addToCartWithOptions(name, price, radioName) {
-            let option = document.querySelector(`input[name="${radioName}"]:checked`).value;
-            cart.push({ name: `${name} (${option})`, price: price });
-            updateCart();
+        function filterCategory(cat) {
+            document.querySelectorAll('.cat-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            renderMenu(cat);
         }
 
-        function addSaroukhToCart() {
-            let price = 12;
-            let name = "Saroukh Saj";
-            let cheese = document.getElementById('cheese-saj').checked;
-            if(cheese) {
-                price += 1;
-                name += " + Cheese";
+        // Cart Actions
+        function addToCart(id) {
+            if (cart[id]) {
+                cart[id]++;
+            } else {
+                cart[id] = 1;
             }
-            cart.push({ name: name, price: price });
-            updateCart();
+            updateCartUI();
         }
 
-        function addJuiceToCart(name, radioName) {
-            let selected = document.querySelector(`input[name="${radioName}"]:checked`).value;
-            let price = selected.includes("7") ? 7 : 8;
-            cart.push({ name: `${name} (${selected})`, price: price });
-            updateCart();
+        function changeQty(id, delta) {
+            if (cart[id]) {
+                cart[id] += delta;
+                if (cart[id] <= 0) delete cart[id];
+            }
+            updateCartUI();
         }
 
-        function updateCart() {
-            document.getElementById('cart-count').innerText = cart.length;
+        function updateCartUI() {
+            let subtotal = 0;
+            let cartListHtml = '';
+
+            for (let id in cart) {
+                const item = menuItems.find(i => i.id === id);
+                const itemTotal = item.price * cart[id];
+                subtotal += itemTotal;
+
+                cartListHtml += `
+                    <div class="cart-item-row">
+                        <div>
+                            <strong>${item.name}</strong><br>
+                            <small>${item.price} SR × ${cart[id]} = ${itemTotal} SR</small>
+                        </div>
+                        <div class="qty-controls">
+                            <button class="qty-btn" onclick="changeQty('${id}', -1)">-</button>
+                            <span>${cart[id]}</span>
+                            <button class="qty-btn" onclick="changeQty('${id}', 1)">+</button>
+                        </div>
+                    </div>
+                `;
+            }
+
+            const deliveryFee = parseInt(document.getElementById('delivery-distance').value) || 3;
+            const finalTotal = subtotal + deliveryFee;
+
+            document.getElementById('cart-total-display').innerText = subtotal + ' SR';
+            document.getElementById('subtotal-val').innerText = subtotal + ' SR';
+            document.getElementById('delivery-val').innerText = deliveryFee + ' SR';
+            document.getElementById('final-total-val').innerText = finalTotal + ' SR';
+
+            document.getElementById('cart-items-list').innerHTML = cartListHtml || '<p style="text-align:center; color:#888;">السلة فارغة</p>';
         }
 
-        function sendToWhatsApp() {
-            if(cart.length === 0) {
-                alert("السلة فارغة! الرجاء اختيار الوجبات أولاً.");
+        function openCheckoutModal() {
+            if (Object.keys(cart).length === 0) {
+                alert('الرجاء إضافة وجبات إلى السلة أولاً!');
+                return;
+            }
+            document.getElementById('checkout-modal').style.display = 'flex';
+        }
+
+        function closeCheckoutModal() {
+            document.getElementById('checkout-modal').style.display = 'none';
+        }
+
+        function sendOrderWhatsApp() {
+            const name = document.getElementById('cust-name').value.trim();
+            const address = document.getElementById('cust-address').value.trim();
+
+            if (!name || !address) {
+                alert('يرجى كتابة الاسم والعنوان بشكل صحيح!');
                 return;
             }
 
-            let phone = "966500000000"; // ഇവിടെ നിങ്ങളുടെ വാട്ട്സ്ആപ്പ് നമ്പർ നൽകുക
-            let message = "*طلب جديد من كوفي بروستد (Kufi Broasted)*%0A%0A";
-            let total = 0;
+            let msg = `*طلب جديد - كوفي بروستد (Kufi Broasted)*\n\n`;
+            msg += `👤 *الاسم:* ${name}\n`;
+            msg += `📍 *العنوان:* ${address}\n\n`;
+            msg += `🛒 *الوجبات:* \n`;
 
-            cart.forEach((item, index) => {
-                message += `${index + 1}. ${item.name} - ${item.price} SR%0A`;
-                total += item.price;
-            });
+            let subtotal = 0;
+            for (let id in cart) {
+                const item = menuItems.find(i => i.id === id);
+                const itemTotal = item.price * cart[id];
+                subtotal += itemTotal;
+                msg += `- ${item.name} × ${cart[id]} = ${itemTotal} SR\n`;
+            }
 
-            message += `%0A*المجموع الكلي: ${total} SR*`;
-            window.open(`https://wa.me/${phone}?text=${message}`, '_blank');
+            const deliveryFee = parseInt(document.getElementById('delivery-distance').value) || 3;
+            const total = subtotal + deliveryFee;
+
+            msg += `\n💵 *المجموع:* ${subtotal} SR`;
+            msg += `\n🚚 *التوصيل:* ${deliveryFee} SR`;
+            msg += `\n💰 *الإجمالي الكلي:* ${total} SR\n`;
+
+            const phone = "966566519003"; // WhatsApp Number
+            const url = `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`;
+            window.open(url, '_blank');
         }
+
+        // Store Opening Hours Status Check (12:30 PM to 01:30 AM)
+        function checkStoreStatus() {
+            const now = new Date();
+            const hours = now.getHours();
+            const minutes = now.getMinutes();
+            const currentTime = hours * 60 + minutes;
+
+            const openTime = 12 * 60 + 30; // 12:30 PM (750 mins)
+            const closeTime = 1 * 60 + 30;  // 01:30 AM (90 mins next day)
+
+            const badge = document.getElementById('store-status-badge');
+
+            // Open from 12:30 PM (750) till Midnight (1440) OR Midnight (0) to 01:30 AM (90)
+            if (currentTime >= openTime || currentTime < closeTime) {
+                badge.innerText = 'مفتوح الان (OPEN)';
+                badge.className = 'store-status status-open';
+            } else {
+                badge.innerText = 'مغلق الان (CLOSED)';
+                badge.className = 'store-status status-closed';
+            }
+        }
+
+        // Initialize Page
+        renderMenu();
+        checkStoreStatus();
     </script>
 </body>
 </html>
