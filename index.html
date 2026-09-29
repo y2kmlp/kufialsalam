@@ -367,11 +367,29 @@
 
         .cart-item-row {
             display: flex;
+            flex-direction: column;
+            margin-bottom: 12px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .cart-item-main {
+            display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 8px;
-            padding-bottom: 8px;
-            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .cart-item-note {
+            margin-top: 6px;
+        }
+
+        .cart-item-note input {
+            width: 100%;
+            padding: 6px 10px;
+            font-size: 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background: #fafafa;
         }
 
         .qty-controls {
@@ -620,9 +638,13 @@
             { id: 'j12', nameEn: 'Orange Squeeze Juice', nameAr: 'عصير برتقال كبس', category: 'juices', hasSizes: true, sizes: [ {labelEn: 'Med (وسط)', labelAr: 'وسط', price: 9.00}, {labelEn: 'Big (كبير)', labelAr: 'كبير', price: 10.00} ] },
             { id: 'j13', nameEn: 'Layers Juice', nameAr: 'عصير طبقات', category: 'juices', hasSizes: true, sizes: [ {labelEn: 'Med (وسط)', labelAr: 'وسط', price: 9.00}, {labelEn: 'Big (كبير)', labelAr: 'كبير', price: 10.00} ] },
 
-            // 9. Soft Drinks (مشروبات غازية)
+            // 9. Soft Drinks (مشروبات غازية) - Option A
             { id: 'd1', nameEn: 'Water', nameAr: 'مياه', category: 'drinks', price: 1.00, desc: 'Bottled Water', hasFlavor: false },
-            { id: 'd2', nameEn: 'Soft Drinks (Can)', nameAr: 'مشروبات غازية (علبة)', category: 'drinks', price: 3.00, desc: 'Pepsi / 7up / Dew / Citrus / Miranda', hasFlavor: false }
+            { id: 'd2', nameEn: 'Pepsi', nameAr: 'بيبسي', category: 'drinks', price: 3.00, desc: '330ml Can', hasFlavor: false },
+            { id: 'd3', nameEn: '7Up', nameAr: 'سفن أب', category: 'drinks', price: 3.00, desc: '330ml Can', hasFlavor: false },
+            { id: 'd4', nameEn: 'Mountain Dew', nameAr: 'ماونتن ديو', category: 'drinks', price: 3.00, desc: '330ml Can', hasFlavor: false },
+            { id: 'd5', nameEn: 'Citrus', nameAr: 'سترستر', category: 'drinks', price: 3.00, desc: '330ml Can', hasFlavor: false },
+            { id: 'd6', nameEn: 'Miranda Orange', nameAr: 'میرندا برتقال', category: 'drinks', price: 3.00, desc: '330ml Can', hasFlavor: false }
         ];
 
         let cart = {};
@@ -732,7 +754,8 @@
                     nameEn: item.nameEn + optEn,
                     nameAr: item.nameAr + optAr,
                     price: finalPrice,
-                    qty: 1
+                    qty: 1,
+                    note: ''
                 };
             }
             updateCartUI();
@@ -746,6 +769,12 @@
             updateCartUI();
         }
 
+        function updateItemNote(key, noteValue) {
+            if (cart[key]) {
+                cart[key].note = noteValue;
+            }
+        }
+
         function updateCartUI() {
             let total = 0;
             let cartListHtml = '';
@@ -757,14 +786,19 @@
 
                 cartListHtml += `
                     <div class="cart-item-row">
-                        <div>
-                            <strong>${item.nameEn} / ${item.nameAr}</strong><br>
-                            <small>${item.price.toFixed(2)} SR × ${item.qty} = ${itemTotal.toFixed(2)} SR</small>
+                        <div class="cart-item-main">
+                            <div>
+                                <strong>${item.nameEn} / ${item.nameAr}</strong><br>
+                                <small>${item.price.toFixed(2)} SR × ${item.qty} = ${itemTotal.toFixed(2)} SR</small>
+                            </div>
+                            <div class="qty-controls">
+                                <button class="qty-btn" onclick="changeQty('${key}', -1)">-</button>
+                                <span>${item.qty}</span>
+                                <button class="qty-btn" onclick="changeQty('${key}', 1)">+</button>
+                            </div>
                         </div>
-                        <div class="qty-controls">
-                            <button class="qty-btn" onclick="changeQty('${key}', -1)">-</button>
-                            <span>${item.qty}</span>
-                            <button class="qty-btn" onclick="changeQty('${key}', 1)">+</button>
+                        <div class="cart-item-note">
+                            <input type="text" placeholder="Add Note / പ്രത്യേക നിർദ്ദേശം (eg: no hummus, extra garlic...)" value="${item.note || ''}" onchange="updateItemNote('${key}', this.value)" oninput="updateItemNote('${key}', this.value)">
                         </div>
                     </div>
                 `;
@@ -831,7 +865,11 @@
                 const itemTotalAr = toArabicDigits(itemTotal.toFixed(2));
 
                 msg += `${item.qty} . ${item.nameEn} - ${itemTotal.toFixed(2)} SR\n`;
-                msg += `${qtyAr} . ${item.nameAr} - ${itemTotalAr} ر.س\n\n`;
+                msg += `${qtyAr} . ${item.nameAr} - ${itemTotalAr} ر.س\n`;
+                if (item.note && item.note.trim() !== '') {
+                    msg += `📝 Note: ${item.note.trim()}\n`;
+                }
+                msg += `\n`;
             }
 
             const totalAr = toArabicDigits(total.toFixed(2));
@@ -847,7 +885,7 @@
                 msg += `📍 *Address:* ${address}\n`;
             }
 
-            const phone = "966566519003";
+            const phone = "966501163652";
             const url = `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`;
             window.open(url, '_blank');
         }
