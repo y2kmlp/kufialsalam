@@ -12,11 +12,13 @@
         :root {
             --primary: #d32f2f;
             --primary-dark: #b71c1c;
+            --accent-gold: #ffb300;
             --secondary: #ffffff;
-            --bg-light: #f8f9fa;
+            --bg-light: #fcf8f5;
             --text-color: #212529;
-            --gray-light: #e0e0e0;
-            --shadow: 0 4px 12px rgba(0,0,0,0.1);
+            --gray-light: #e2e8f0;
+            --shadow: 0 4px 15px rgba(211, 47, 47, 0.08);
+            --card-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
         }
 
         * {
@@ -34,32 +36,35 @@
             text-align: left;
         }
 
-        .announcement-bar {
-            background-color: var(--primary-dark);
+        /* 1st Announcement Bar (English - Right to Left) */
+        .announcement-bar-1 {
+            background: linear-gradient(90deg, #b71c1c, #d32f2f, #b71c1c);
             color: white;
             padding: 8px 0;
-            font-size: 14px;
+            font-size: 13px;
             font-weight: 600;
             overflow: hidden;
             white-space: nowrap;
             position: relative;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
 
-        .marquee-text {
+        .marquee-left {
             display: inline-block;
             padding-left: 100%;
-            animation: marquee 20s linear infinite;
+            animation: marquee-left-anim 25s linear infinite;
         }
 
-        @keyframes marquee {
+        @keyframes marquee-left-anim {
             0% { transform: translate(0, 0); }
             100% { transform: translate(-100%, 0); }
         }
 
+        /* Header Styling */
         header {
             background-color: var(--secondary);
             box-shadow: var(--shadow);
-            padding: 15px 20px;
+            padding: 12px 20px;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -68,6 +73,7 @@
             z-index: 100;
             flex-wrap: wrap;
             gap: 10px;
+            border-bottom: 2px solid #f1f1f1;
         }
 
         .logo-container {
@@ -80,82 +86,222 @@
             height: 55px;
             width: auto;
             border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
 
         .brand-details h1 {
-            font-size: 18px;
+            font-size: 20px;
             color: var(--primary);
             line-height: 1.2;
+            font-weight: 800;
         }
 
         .brand-details p {
-            font-size: 12px;
-            color: #666;
+            font-size: 13px;
+            color: #555;
+            font-weight: 600;
         }
 
         .header-center-slot {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .header-action-buttons {
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
         .header-map-btn {
             background: #1a73e8;
             color: white;
-            padding: 6px 14px;
+            padding: 7px 14px;
             border-radius: 20px;
             text-decoration: none;
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 700;
             display: inline-flex;
             align-items: center;
+            justify-content: center;
             gap: 5px;
             transition: 0.2s;
+            box-shadow: 0 2px 6px rgba(26,115,232,0.3);
         }
 
-        .header-map-btn:hover {
-            background: #1557b0;
+        .header-call-btn {
+            background: #2e7d32;
+            color: white;
+            padding: 7px 14px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            transition: 0.2s;
+            box-shadow: 0 2px 6px rgba(46,125,50,0.3);
+        }
+
+        .header-map-btn:hover, .header-call-btn:hover {
+            transform: translateY(-1px);
         }
 
         .store-status {
-            padding: 5px 12px;
+            padding: 6px 12px;
             border-radius: 20px;
-            font-size: 12px;
+            font-size: 11px;
             font-weight: 700;
         }
 
         .status-open {
             background-color: #e8f5e9;
             color: #2e7d32;
+            border: 1px solid #c8e6c9;
         }
 
         .status-closed {
             background-color: #ffebee;
             color: #c62828;
+            border: 1px solid #ffcdd2;
+        }
+
+        /* Mobile Specific Header Adjustments */
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                text-align: center;
+                gap: 12px;
+                padding: 15px 12px;
+            }
+
+            .logo-container {
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                text-align: center;
+                gap: 8px;
+            }
+
+            .logo-container img {
+                height: 65px;
+            }
+
+            .brand-details {
+                text-align: center;
+            }
+
+            .header-center-slot {
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                width: 100%;
+                gap: 10px;
+            }
+
+            .header-action-buttons {
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                width: 100%;
+                max-width: 380px;
+                gap: 10px;
+            }
+
+            .header-call-btn, .header-map-btn {
+                flex: 1;
+                padding: 9px 12px;
+                font-size: 13px;
+                text-align: center;
+            }
+
+            .store-status {
+                display: inline-block;
+                margin-top: 2px;
+            }
+        }
+
+        /* 2nd Announcement Bar (Arabic - Left to Right) */
+        .announcement-bar-2 {
+            background: #212121;
+            color: var(--accent-gold);
+            padding: 7px 0;
+            font-size: 13px;
+            font-weight: 700;
+            overflow: hidden;
+            white-space: nowrap;
+            position: relative;
+            direction: rtl;
+            border-bottom: 2px solid var(--primary);
+        }
+
+        .marquee-right {
+            display: inline-block;
+            padding-right: 100%;
+            animation: marquee-right-anim 25s linear infinite;
+        }
+
+        @keyframes marquee-right-anim {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(100%, 0); }
+        }
+
+        /* Since 1987 Vintage Banner */
+        .since-banner {
+            background: linear-gradient(135deg, #fff3e0, #ffe0b2);
+            border: 2px dashed #e65100;
+            border-radius: 12px;
+            padding: 10px 15px;
+            text-align: center;
+            margin: 15px auto 5px auto;
+            max-width: 800px;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.05);
+        }
+
+        .since-banner h2 {
+            color: #b71c1c;
+            font-size: 16px;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+        }
+
+        .since-banner p {
+            color: #4e342e;
+            font-size: 12px;
+            font-weight: 700;
+            margin-top: 2px;
         }
 
         /* 3x3 Grid Category Navigation */
         .category-grid-nav {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 8px;
+            gap: 10px;
             background: white;
-            padding: 12px;
+            padding: 15px;
             border-bottom: 1px solid var(--gray-light);
             max-width: 800px;
-            margin: 0 auto;
+            margin: 10px auto;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+            border-radius: 12px;
         }
 
         .cat-btn {
-            padding: 10px 4px;
-            border: 1px solid var(--gray-light);
-            border-radius: 8px;
-            background: #fdfdfd;
+            padding: 10px 6px;
+            border: 1.5px solid var(--gray-light);
+            border-radius: 10px;
+            background: #ffffff;
             color: var(--text-color);
             font-weight: 700;
             font-size: 13px;
             cursor: pointer;
-            transition: 0.3s;
+            transition: all 0.25s ease;
             text-align: center;
             display: flex;
             flex-direction: column;
@@ -166,95 +312,177 @@
 
         .cat-btn span {
             font-size: 11px;
-            font-weight: 400;
+            font-weight: 600;
             color: #666;
-            margin-top: 2px;
+            margin-top: 3px;
         }
 
         .cat-btn.active, .cat-btn:hover {
-            background: var(--primary);
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
             color: white;
-            border-color: var(--primary);
+            border-color: var(--primary-dark);
+            box-shadow: 0 4px 10px rgba(211, 47, 47, 0.25);
+            transform: translateY(-2px);
         }
 
         .cat-btn.active span, .cat-btn:hover span {
-            color: #fff;
+            color: #fff8e1;
+        }
+
+        /* Sub-category Filter Buttons */
+        .subcategory-filter {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 20px;
+            flex-wrap: nowrap;
+            width: 100%;
+        }
+
+        .sub-cat-btn {
+            flex: 1;
+            padding: 8px 4px;
+            border: 1px solid #0288d1;
+            border-radius: 14px;
+            background: #e1f5fe;
+            color: #0288d1;
+            font-weight: 700;
+            font-size: 11px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            line-height: 1.25;
+        }
+
+        .sub-cat-btn span.ar-txt {
+            font-size: 10px;
+            font-weight: 600;
+            margin-top: 2px;
+            display: block;
+        }
+
+        .sub-cat-btn.active, .sub-cat-btn:hover {
+            background: #0288d1;
+            color: white;
+        }
+
+        .sub-cat-btn.active span.ar-txt, .sub-cat-btn:hover span.ar-txt {
+            color: #e0f7fa;
         }
 
         .container {
             max-width: 800px;
-            margin: 20px auto;
+            margin: 15px auto;
             padding: 0 15px;
         }
 
         .menu-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 15px;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 18px;
         }
 
         .item-card {
             background: white;
-            border-radius: 12px;
-            padding: 15px;
-            box-shadow: var(--shadow);
+            border-radius: 14px;
+            padding: 16px;
+            box-shadow: var(--card-shadow);
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+            border-left: 4px solid var(--primary);
+            transition: all 0.25s ease;
+            position: relative;
+        }
+
+        .item-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 22px rgba(0, 0, 0, 0.1);
+        }
+
+        .item-card.category-juices {
+            border-left-color: #ff9800;
+            background: linear-gradient(180deg, #ffffff 0%, #fffde7 100%);
+        }
+
+        .item-card.category-drinks {
+            border-left-color: #0288d1;
+            background: linear-gradient(180deg, #ffffff 0%, #e1f5fe 100%);
         }
 
         .item-info h3 {
-            font-size: 15px;
-            margin-bottom: 4px;
+            font-size: 16px;
+            margin-bottom: 5px;
+            color: #1a1a1a;
+            font-weight: 700;
         }
 
         .item-info p {
             font-size: 12px;
             color: #777;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
+            font-weight: 600;
         }
 
         .option-selection {
             display: flex;
             flex-wrap: wrap;
             gap: 8px;
-            margin: 8px 0;
+            margin: 10px 0;
             font-size: 12px;
             font-weight: 600;
-            background: #f1f1f1;
-            padding: 8px;
-            border-radius: 6px;
+            background: #fdf5f5;
+            padding: 8px 10px;
+            border-radius: 8px;
+            border: 1px dashed #ffcdd2;
         }
 
         .option-selection label {
             cursor: pointer;
             display: flex;
             align-items: center;
-            gap: 4px;
+            gap: 5px;
+            color: #333;
         }
 
         .item-bottom {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-top: 10px;
+            margin-top: 12px;
+            padding-top: 10px;
+            border-top: 1px solid #f5f5f5;
         }
 
         .item-price {
-            font-weight: 700;
+            font-weight: 800;
             color: var(--primary-dark);
-            font-size: 16px;
+            font-size: 17px;
+            background: #fff3e0;
+            padding: 2px 8px;
+            border-radius: 6px;
+            border: 1px solid #ffe0b2;
         }
 
         .add-btn {
-            background: var(--primary);
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
             color: white;
             border: none;
-            padding: 6px 16px;
+            padding: 8px 18px;
             border-radius: 20px;
             cursor: pointer;
-            font-weight: 600;
-            transition: 0.2s;
+            font-weight: 700;
+            transition: all 0.2s ease;
+            box-shadow: 0 3px 8px rgba(211, 47, 47, 0.25);
+        }
+
+        .add-btn:hover {
+            transform: scale(1.04);
+            box-shadow: 0 4px 12px rgba(211, 47, 47, 0.35);
         }
 
         .cart-bar {
@@ -264,15 +492,16 @@
             right: 0;
             background: white;
             padding: 12px 20px;
-            box-shadow: 0 -4px 15px rgba(0,0,0,0.15);
+            box-shadow: 0 -4px 20px rgba(0,0,0,0.15);
             display: flex;
             justify-content: space-between;
             align-items: center;
             z-index: 1000;
+            border-top: 2px solid var(--primary);
         }
 
         .cart-total {
-            font-size: 18px;
+            font-size: 20px;
             font-weight: 800;
             color: var(--primary);
         }
@@ -281,7 +510,7 @@
             background: #25D366;
             color: white;
             border: none;
-            padding: 10px 24px;
+            padding: 12px 24px;
             border-radius: 25px;
             font-size: 15px;
             font-weight: 700;
@@ -289,6 +518,13 @@
             display: flex;
             align-items: center;
             gap: 8px;
+            box-shadow: 0 3px 10px rgba(37, 211, 102, 0.3);
+            transition: 0.2s;
+        }
+
+        .checkout-btn:hover {
+            background: #1eb954;
+            transform: translateY(-1px);
         }
 
         .modal {
@@ -304,19 +540,20 @@
 
         .modal-content {
             background: white;
-            border-radius: 12px;
+            border-radius: 14px;
             padding: 20px;
             width: 100%;
             max-width: 500px;
             max-height: 90vh;
             overflow-y: auto;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
         }
 
         .modal-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 1px solid #eee;
+            border-bottom: 2px solid #eee;
             padding-bottom: 10px;
             margin-bottom: 15px;
         }
@@ -334,9 +571,9 @@
 
         .form-group input, .form-group select {
             width: 100%;
-            padding: 8px 12px;
+            padding: 9px 12px;
             border: 1px solid #ccc;
-            border-radius: 6px;
+            border-radius: 8px;
             font-size: 14px;
         }
 
@@ -356,11 +593,11 @@
         }
 
         .delivery-note-box {
-            background-color: #fff3cd;
-            border: 1px solid #ffeeba;
+            background-color: #fff8e1;
+            border: 1px solid #ffe082;
             color: #856404;
-            padding: 10px;
-            border-radius: 6px;
+            padding: 10px 14px;
+            border-radius: 8px;
             font-size: 13px;
             margin-bottom: 15px;
         }
@@ -388,7 +625,7 @@
             padding: 6px 10px;
             font-size: 12px;
             border: 1px solid #ddd;
-            border-radius: 4px;
+            border-radius: 6px;
             background: #fafafa;
         }
 
@@ -401,46 +638,44 @@
         .qty-btn {
             background: #eee;
             border: none;
-            width: 26px;
-            height: 26px;
+            width: 28px;
+            height: 28px;
             border-radius: 50%;
             cursor: pointer;
             font-weight: bold;
+            transition: 0.2s;
+        }
+
+        .qty-btn:hover {
+            background: #ddd;
         }
 
         footer {
-            background: #222;
+            background: #1e1e1e;
             color: white;
             text-align: center;
-            padding: 20px;
-            margin-top: 30px;
-            border-radius: 12px 12px 0 0;
+            padding: 25px 20px;
+            margin-top: 35px;
+            border-radius: 16px 16px 0 0;
+            box-shadow: 0 -4px 15px rgba(0,0,0,0.1);
         }
 
         .location-btn {
             display: inline-block;
-            background: var(--primary);
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
             color: white;
-            padding: 10px 20px;
-            border-radius: 20px;
+            padding: 10px 22px;
+            border-radius: 25px;
             text-decoration: none;
             font-weight: bold;
-            margin: 10px 0;
-        }
-
-        .gallery-slot {
-            margin-top: 15px;
-            border: 2px dashed #555;
-            padding: 15px;
-            border-radius: 8px;
-            color: #aaa;
-            font-size: 13px;
+            margin: 12px 0;
+            box-shadow: 0 3px 10px rgba(211, 47, 47, 0.3);
         }
 
         .footer-credits {
-            margin-top: 15px;
+            margin-top: 18px;
             padding-top: 15px;
-            border-top: 1px solid #444;
+            border-top: 1px solid #333;
             font-size: 12px;
             color: #bbb;
         }
@@ -448,12 +683,14 @@
 </head>
 <body>
 
-    <div class="announcement-bar">
-        <div class="marquee-text">
-            📍 Al Salam, Riyadh | Working Hours: 12:30 PM - 01:30 AM &nbsp;&nbsp; | &nbsp;&nbsp; 📍 السلام، الرياض | أوقات العمل: ١٢:٣٠ ظهراً - ٠١:٣٠ ليلاً
+    <!-- 1st Announcement Bar: English (Right to Left) -->
+    <div class="announcement-bar-1">
+        <div class="marquee-left">
+            🍗 Serving You Delicious Broasted Since 1987! &nbsp;&nbsp;|&nbsp;&nbsp; Al Malaz (Main): 0114775172 &nbsp;&nbsp;|&nbsp;&nbsp; Al Salam: 0112376000 &nbsp;&nbsp;|&nbsp;&nbsp; Al Munsiyah: 0550261660 &nbsp;&nbsp;|&nbsp;&nbsp; Al Futa: 0538896156
         </div>
     </div>
 
+    <!-- Header Section -->
     <header>
         <div class="logo-container">
             <img src="logo.png" alt="Kufi Broasted" onerror="this.src='https://via.placeholder.com/55?text=Kufi'">
@@ -464,12 +701,30 @@
         </div>
 
         <div class="header-center-slot">
-            <a href="https://maps.app.goo.gl/reHjbT4YxnHDwFmYA?g_st=ഔ" target="_blank" class="header-map-btn">
-                <i class="fas fa-map-marker-alt"></i> Location (الموقع)
-            </a>
+            <div class="header-action-buttons">
+                <a href="tel:0112376000" class="header-call-btn">
+                    <i class="fas fa-phone-alt"></i> 0112376000
+                </a>
+                <a href="https://maps.app.goo.gl/reHjbT4YxnHDwFmYA?g_st=ഔ" target="_blank" class="header-map-btn">
+                    <i class="fas fa-map-marker-alt"></i> Location
+                </a>
+            </div>
             <div id="store-status-badge" class="store-status status-open">...</div>
         </div>
     </header>
+
+    <!-- 2nd Announcement Bar: Arabic (Left to Right) -->
+    <div class="announcement-bar-2">
+        <div class="marquee-right">
+            🍗 نخدمكم بأشهى بروستد منذ عام ١٩٨٧م! &nbsp;&nbsp;|&nbsp;&nbsp; الفرع الرئيسي - الملز: ٠١١٤٧٧٥١٧٢ &nbsp;&nbsp;|&nbsp;&nbsp; السلام: ٠١١٢٣٧٦٠٠٠ &nbsp;&nbsp;|&nbsp;&nbsp; المونسية: ٠٥٥٠٢٦١٦٦٠ &nbsp;&nbsp;|&nbsp;&nbsp; الفوطة: ٠٥٣٨٨٩٦١٥٦
+        </div>
+    </div>
+
+    <!-- Vintage 1987 Banner -->
+    <div class="since-banner">
+        <h2>🍗 SERVING YOU DELICIOUS BROASTED SINCE 1987</h2>
+        <p>١٩٨٧ منذ عام - نخدمكم بأشهى بروستد</p>
+    </div>
 
     <!-- 3x3 Grid Category Navigation -->
     <div class="category-grid-nav">
@@ -490,15 +745,11 @@
         <footer>
             <h3>Kufi Broasted - كوفي بروستد</h3>
             <p style="font-size: 13px; color: #ccc; margin-top: 5px;">Al Salam District, Riyadh - حي السلام، الرياض</p>
+            <p style="font-size: 14px; color: #ffb300; margin-top: 5px; font-weight: bold;">📞 Main Call: 011 237 6000</p>
             
             <a href="https://maps.app.goo.gl/reHjbT4YxnHDwFmYA?g_st=ഔ" target="_blank" class="location-btn">
                 <i class="fas fa-map-marker-alt"></i> Location on Google Maps (موقعنا على الخريطة)
             </a>
-
-            <div class="gallery-slot">
-                <i class="fas fa-images" style="font-size:24px; margin-bottom:5px;"></i><br>
-                Photo Gallery Section (سيتم إضافة صور المعرض لاحقاً)
-            </div>
 
             <div class="footer-credits">
                 <p>© Kufi Broasted. All rights reserved.</p>
@@ -556,7 +807,7 @@
                 <input type="text" id="cust-address" placeholder="Neighborhood, Street name...">
             </div>
 
-            <div style="background: #f9f9f9; padding: 10px; border-radius: 6px; margin-top: 10px;">
+            <div style="background: #fff3e0; padding: 12px; border-radius: 8px; margin-top: 10px; border: 1px solid #ffe0b2;">
                 <div style="display:flex; justify-content:space-between; font-weight:bold; font-size:16px; color:var(--primary);">
                     <span>Total Amount / المبلغ الإجمالي:</span>
                     <span id="final-total-val">0 SR</span>
@@ -578,15 +829,20 @@
             { id: 'b4', nameEn: 'Chicken Boneless 10Pcs', nameAr: 'مسحب دجاج 10 قطع', category: 'broasted', price: 20.00, desc: 'CAL 1840', hasFlavor: true },
             { id: 'b5', nameEn: 'Chicken Strips 6Pcs', nameAr: 'ستريبس دجاج 6 قطع', category: 'broasted', price: 20.00, desc: 'CAL 1875', hasFlavor: true },
             { id: 'b6', nameEn: 'Chicken Zinger 4Pcs', nameAr: 'زنجر دجاج 4 قطع', category: 'broasted', price: 23.00, desc: 'CAL 1873', hasFlavor: true },
-            { id: 'b7', nameEn: 'Shrimp Broasted 12Pcs', nameAr: 'بروستد روبيان 12 قطعة', category: 'broasted', price: 23.00, desc: 'CAL 1719', hasFlavor: true },
+            { id: 'b7', nameEn: 'Shrimp Broasted', nameAr: 'بروستد روبيان', category: 'broasted', price: 23.00, desc: 'CAL 1719', hasFlavor: true, isShrimp: true },
+            { id: 'b8', nameEn: 'Super Fish 6Pcs', nameAr: 'سوبر سمك ٦ قطع', category: 'broasted', price: 23.00, desc: 'CAL 1885', hasFlavor: false },
+            { id: 'b9', nameEn: 'Chicken Fillet 4Pcs', nameAr: 'فيليه دجاج ٤ قطع', category: 'broasted', price: 20.00, desc: 'CAL 1875', hasFlavor: true },
 
             // 2. Shawarma (شاورما)
-            { id: 's1', nameEn: 'Shawarma Sandwich', nameAr: 'ساندوتش شاورما', category: 'shawarma', price: 6.00, desc: 'CAL 352', hasFlavor: false },
-            { id: 's3', nameEn: 'Saroukh Saj Shawarma', nameAr: 'صاروخ صاج شاورما', category: 'shawarma', price: 12.00, desc: 'CAL 676 (Add cheese +1 SR)', hasFlavor: false },
-            { id: 's4', nameEn: 'Jambo Shawarma', nameAr: 'شاورما جامبو', category: 'shawarma', price: 12.00, desc: 'CAL 525', hasFlavor: false },
-            { id: 's6', nameEn: 'Shawarma Arabian', nameAr: 'شاورما عربي', category: 'shawarma', price: 15.00, desc: 'CAL 753', hasFlavor: false },
-            { id: 's7', nameEn: 'Plate Shawarma', nameAr: 'صحن شاورما', category: 'shawarma', price: 15.00, desc: 'CAL 724', hasFlavor: false },
-            { id: 's8', nameEn: 'Kufi Shawarma 10Pcs', nameAr: 'شاورما كوفي 10 قطع', category: 'shawarma', price: 25.00, desc: 'CAL 1506', hasFlavor: false },
+            { id: 's1', nameEn: 'Shawarma Sandwich', nameAr: 'ساندوتش شاورما', category: 'shawarma', desc: 'CAL 352', hasCheeseOpt: true, cheeseOptions: [ {labelEn: 'Normal', labelAr: 'عادي', price: 6.00}, {labelEn: 'With Cheese', labelAr: 'مع جبن', price: 7.00} ] },
+            { id: 's3', nameEn: 'Saroukh Saj Shawarma', nameAr: 'صاروخ صاج شاورما', category: 'shawarma', desc: 'CAL 676', hasCheeseOpt: true, cheeseOptions: [ {labelEn: 'Normal', labelAr: 'عادي', price: 12.00}, {labelEn: 'With Cheese', labelAr: 'مع جبن', price: 13.00} ] },
+            { id: 's4', nameEn: 'Jambo Shawarma', nameAr: 'شاورما جامبو', category: 'shawarma', desc: 'CAL 525', hasCheeseOpt: true, cheeseOptions: [ {labelEn: 'Normal', labelAr: 'عادي', price: 12.00}, {labelEn: 'With Cheese', labelAr: 'مع جبن', price: 13.00} ] },
+            { id: 's6', nameEn: 'Shawarma Arabian', nameAr: 'شاورما عربي', category: 'shawarma', desc: 'CAL 753', hasCheeseOpt: true, cheeseOptions: [ {labelEn: 'Normal', labelAr: 'عادي', price: 15.00}, {labelEn: 'With Cheese', labelAr: 'مع جبن', price: 16.00} ] },
+            { id: 's8', nameEn: 'Kufi Shawarma 10Pcs', nameAr: 'شاورما كوفي 10 قطع', category: 'shawarma', desc: 'CAL 1506', hasCheeseOpt: true, cheeseOptions: [ {labelEn: 'Normal', labelAr: 'عادي', price: 25.00}, {labelEn: 'With Cheese', labelAr: 'مع جبن', price: 27.00} ] },
+            { id: 's7', nameEn: 'Plate Shawarma', nameAr: 'صحن شاورما', category: 'shawarma', hasSizes: true, sizes: [ {labelEn: 'Small (CAL 724)', labelAr: 'صغير', price: 15.00}, {labelEn: 'Big', labelAr: 'كبير', price: 24.00} ] },
+            { id: 's9', nameEn: 'Shawarma Tortilla Box', nameAr: 'علبة شاورما تورتيلا', category: 'shawarma', price: 35.00, desc: 'CAL 1530', hasFlavor: false },
+            { id: 's10', nameEn: 'Box Shawarma', nameAr: 'علبة شاورما', category: 'shawarma', desc: 'CAL 810', hasCheeseOpt: true, cheeseOptions: [ {labelEn: 'Normal', labelAr: 'عادي', price: 15.00}, {labelEn: 'With Cheese', labelAr: 'مع جبن', price: 16.00} ] },
+            { id: 's11', nameEn: 'Salad Shawarma', nameAr: 'سلطة شاورما', category: 'shawarma', desc: 'CAL 650', hasCheeseOpt: true, cheeseOptions: [ {labelEn: 'Normal', labelAr: 'عادي', price: 15.00}, {labelEn: 'With Cheese', labelAr: 'مع جبن', price: 16.00} ] },
 
             // 3. Tortilla (تورتيلا)
             { id: 't1', nameEn: 'Beef Kabab Tortilla', nameAr: 'تورتيلا كباب لحم', category: 'tortilla', price: 12.00, desc: 'CAL 832', hasFlavor: false },
@@ -638,33 +894,96 @@
             { id: 'j12', nameEn: 'Orange Squeeze Juice', nameAr: 'عصير برتقال كبس', category: 'juices', hasSizes: true, sizes: [ {labelEn: 'Med (وسط)', labelAr: 'وسط', price: 9.00}, {labelEn: 'Big (كبير)', labelAr: 'كبير', price: 10.00} ] },
             { id: 'j13', nameEn: 'Layers Juice', nameAr: 'عصير طبقات', category: 'juices', hasSizes: true, sizes: [ {labelEn: 'Med (وسط)', labelAr: 'وسط', price: 9.00}, {labelEn: 'Big (كبير)', labelAr: 'كبير', price: 10.00} ] },
 
-            // 9. Soft Drinks (مشروبات غازية) - Option A
-            { id: 'd1', nameEn: 'Water', nameAr: 'مياه', category: 'drinks', price: 1.00, desc: 'Bottled Water', hasFlavor: false },
-            { id: 'd2', nameEn: 'Pepsi', nameAr: 'بيبسي', category: 'drinks', price: 3.00, desc: '330ml Can', hasFlavor: false },
-            { id: 'd3', nameEn: '7Up', nameAr: 'سفن أب', category: 'drinks', price: 3.00, desc: '330ml Can', hasFlavor: false },
-            { id: 'd4', nameEn: 'Mountain Dew', nameAr: 'ماونتن ديو', category: 'drinks', price: 3.00, desc: '330ml Can', hasFlavor: false },
-            { id: 'd5', nameEn: 'Citrus', nameAr: 'سترستر', category: 'drinks', price: 3.00, desc: '330ml Can', hasFlavor: false },
-            { id: 'd6', nameEn: 'Miranda Orange', nameAr: 'میرندا برتقال', category: 'drinks', price: 3.00, desc: '330ml Can', hasFlavor: false }
+            // 9. Soft Drinks - Sub-categories Reorganized (مشروبات غازية)
+            // Small / Can
+            { id: 'd1', nameEn: 'Water', nameAr: 'مياه', category: 'drinks', subcategory: 'small', price: 1.00, desc: 'Bottled Water', hasFlavor: false },
+            { id: 'd2', nameEn: 'Aseer Rabea', nameAr: 'عصير ربيع', category: 'drinks', subcategory: 'small', price: 2.00, desc: 'Tetra Pack', hasFlavor: false },
+            { id: 'd3', nameEn: 'Pepsi', nameAr: 'بيبسي', category: 'drinks', subcategory: 'small', price: 3.00, desc: '330ml Can', hasFlavor: false },
+            { id: 'd3_citrus', nameEn: 'Miranda Citrus', nameAr: 'میرندا حمضيات', category: 'drinks', subcategory: 'small', price: 3.00, desc: '330ml Can', hasFlavor: false },
+            { id: 'd4', nameEn: '7Up', nameAr: 'سفن أب', category: 'drinks', subcategory: 'small', price: 3.00, desc: '330ml Can', hasFlavor: false },
+            { id: 'd5', nameEn: 'Mountain Dew', nameAr: 'ماونتن ديو', category: 'drinks', subcategory: 'small', price: 3.00, desc: '330ml Can', hasFlavor: false },
+            { id: 'd6', nameEn: 'Miranda Orange', nameAr: 'میرندا برتقال', category: 'drinks', subcategory: 'small', price: 3.00, desc: '330ml Can', hasFlavor: false },
+            { id: 'd7', nameEn: 'Shani', nameAr: 'شاني', category: 'drinks', subcategory: 'small', price: 3.00, desc: '330ml Can', hasFlavor: false },
+            { id: 'd8', nameEn: 'Pepsi Diet', nameAr: 'بيبسي دايت', category: 'drinks', subcategory: 'small', price: 3.00, desc: '330ml Can', hasFlavor: false },
+            { id: 'd9', nameEn: '7Up Diet', nameAr: 'سفن أب دايت', category: 'drinks', subcategory: 'small', price: 3.00, desc: '330ml Can', hasFlavor: false },
+
+            // Medium Family Bottle (1 Liter - 5 SAR)
+            { id: 'dm1', nameEn: 'Pepsi (1 Liter)', nameAr: 'بيبسي (1 لتر)', category: 'drinks', subcategory: 'medium', price: 5.00, desc: '1 Liter Family Bottle', hasFlavor: false },
+            { id: 'dm2', nameEn: 'Miranda Citrus (1 Liter)', nameAr: 'میرندا حمضيات (1 لتر)', category: 'drinks', subcategory: 'medium', price: 5.00, desc: '1 Liter Family Bottle', hasFlavor: false },
+            { id: 'dm3', nameEn: 'Miranda Orange (1 Liter)', nameAr: 'میرندا برتقال (1 لتر)', category: 'drinks', subcategory: 'medium', price: 5.00, desc: '1 Liter Family Bottle', hasFlavor: false },
+            { id: 'dm4', nameEn: '7Up (1 Liter)', nameAr: 'سفن أب (1 لتر)', category: 'drinks', subcategory: 'medium', price: 5.00, desc: '1 Liter Family Bottle', hasFlavor: false },
+            { id: 'dm5', nameEn: 'Mountain Dew (1 Liter)', nameAr: 'ماونتن ديو (1 لتر)', category: 'drinks', subcategory: 'medium', price: 5.00, desc: '1 Liter Family Bottle', hasFlavor: false },
+            { id: 'dm6', nameEn: 'Pepsi Diet (1 Liter)', nameAr: 'بيبسي دايت (1 لتر)', category: 'drinks', subcategory: 'medium', price: 5.00, desc: '1 Liter Family Bottle', hasFlavor: false },
+
+            // Large Family Bottle (2.25 Liter - 9 SAR)
+            { id: 'dl1', nameEn: 'Pepsi (2.25 Liter)', nameAr: 'بيبسي (2.25 لتر)', category: 'drinks', subcategory: 'large', price: 9.00, desc: '2.25 Liter Family Bottle', hasFlavor: false },
+            { id: 'dl2', nameEn: 'Miranda Citrus (2.25 Liter)', nameAr: 'میرندا حمضيات (2.25 لتر)', category: 'drinks', subcategory: 'large', price: 9.00, desc: '2.25 Liter Family Bottle', hasFlavor: false },
+            { id: 'dl3', nameEn: 'Miranda Orange (2.25 Liter)', nameAr: 'میرندا برتقال (2.25 لتر)', category: 'drinks', subcategory: 'large', price: 9.00, desc: '2.25 Liter Family Bottle', hasFlavor: false },
+            { id: 'dl4', nameEn: '7Up (2.25 Liter)', nameAr: 'سفن أب (2.25 لتر)', category: 'drinks', subcategory: 'large', price: 9.00, desc: '2.25 Liter Family Bottle', hasFlavor: false },
+            { id: 'dl5', nameEn: 'Mountain Dew (2.25 Liter)', nameAr: 'ماونتن ديو (2.25 لتر)', category: 'drinks', subcategory: 'large', price: 9.00, desc: '2.25 Liter Family Bottle', hasFlavor: false }
         ];
 
         let cart = {};
+        let activeDrinkSubcat = 'small';
 
         function renderMenu(category) {
             const container = document.getElementById('menu-container');
-            const filtered = menuItems.filter(i => i.category === category);
+            let filtered = menuItems.filter(i => i.category === category);
 
-            let html = '<div class="menu-grid">';
+            let subcatFilterHtml = '';
+
+            // Handle Sub-category Filtering for Soft Drinks
+            if (category === 'drinks') {
+                subcatFilterHtml = `
+                    <div class="subcategory-filter">
+                        <button class="sub-cat-btn ${activeDrinkSubcat === 'small' ? 'active' : ''}" onclick="filterDrinkSubcat('small')">
+                            Small / Can<span class="ar-txt">صغير / علبة</span>
+                        </button>
+                        <button class="sub-cat-btn ${activeDrinkSubcat === 'medium' ? 'active' : ''}" onclick="filterDrinkSubcat('medium')">
+                            Medium (1L - 5 SAR)<span class="ar-txt">وسط (١ لتر - ٥ ر.س)</span>
+                        </button>
+                        <button class="sub-cat-btn ${activeDrinkSubcat === 'large' ? 'active' : ''}" onclick="filterDrinkSubcat('large')">
+                            Large (2.25L - 9 SAR)<span class="ar-txt">كبير (٢.٢٥ لتر - ٩ ر.س)</span>
+                        </button>
+                    </div>
+                `;
+
+                filtered = filtered.filter(i => i.subcategory === activeDrinkSubcat);
+            }
+
+            let html = subcatFilterHtml + '<div class="menu-grid">';
             filtered.forEach(item => {
                 let optionsHtml = '';
                 let defaultPrice = item.price ? item.price.toFixed(2) + ' SR' : '';
 
                 if (item.hasFlavor) {
-                    optionsHtml = `
-                        <div class="option-selection">
-                            <label><input type="radio" name="opt_${item.id}" value="Spicy" checked> Spicy (حراق)</label>
-                            <label><input type="radio" name="opt_${item.id}" value="Normal"> Normal (عادي)</label>
-                        </div>
-                    `;
+                    if (item.isShrimp) {
+                        optionsHtml = `
+                            <div class="option-selection">
+                                <label><input type="radio" name="opt_${item.id}" value="Spicy" checked> Spicy (10Pcs) / حراق (١٠ قطع)</label>
+                                <label><input type="radio" name="opt_${item.id}" value="Normal"> Normal (12Pcs) / عادي (١٢ قطعة)</label>
+                            </div>
+                        `;
+                    } else {
+                        optionsHtml = `
+                            <div class="option-selection">
+                                <label><input type="radio" name="opt_${item.id}" value="Spicy" checked> Spicy (حراق)</label>
+                                <label><input type="radio" name="opt_${item.id}" value="Normal"> Normal (عادي)</label>
+                            </div>
+                        `;
+                    }
+                } else if (item.hasCheeseOpt) {
+                    optionsHtml = '<div class="option-selection">';
+                    item.cheeseOptions.forEach((opt, idx) => {
+                        optionsHtml += `
+                            <label>
+                                <input type="radio" name="opt_${item.id}" value="${idx}" ${idx === 0 ? 'checked' : ''} onchange="updateItemPriceDisplay('${item.id}', ${opt.price})"> 
+                                ${opt.labelEn} / ${opt.labelAr} - ${opt.price} SR
+                            </label><br>
+                        `;
+                    });
+                    optionsHtml += '</div>';
+                    defaultPrice = item.cheeseOptions[0].price.toFixed(2) + ' SR';
                 } else if (item.hasSizes) {
                     optionsHtml = '<div class="option-selection">';
                     item.sizes.forEach((sz, idx) => {
@@ -680,7 +999,7 @@
                 }
 
                 html += `
-                    <div class="item-card">
+                    <div class="item-card category-${item.category}">
                         <div class="item-info">
                             <h3>${item.nameEn} - ${item.nameAr}</h3>
                             <p>${item.desc || ''}</p>
@@ -699,6 +1018,11 @@
             container.innerHTML = html;
         }
 
+        function filterDrinkSubcat(subcat) {
+            activeDrinkSubcat = subcat;
+            renderMenu('drinks');
+        }
+
         function updateItemPriceDisplay(itemId, price) {
             const el = document.getElementById(`price_disp_${itemId}`);
             if (el) el.innerText = price.toFixed(2) + ' SR';
@@ -709,6 +1033,7 @@
             let targetBtn = event.currentTarget || event.target;
             if(!targetBtn.classList.contains('cat-btn')) targetBtn = targetBtn.closest('.cat-btn');
             targetBtn.classList.add('active');
+            activeDrinkSubcat = 'small';
             renderMenu(cat);
         }
 
@@ -722,15 +1047,37 @@
             if (item.hasFlavor) {
                 const selected = document.querySelector(`input[name="opt_${id}"]:checked`);
                 if (selected) {
-                    if (selected.value === 'Spicy') {
-                        optEn = ' (Spicy)';
-                        optAr = ' (حراق)';
-                        optKey = '_spicy';
+                    if (item.isShrimp) {
+                        if (selected.value === 'Spicy') {
+                            optEn = ' 10Pcs (Spicy)';
+                            optAr = ' ١٠ قطع (حراق)';
+                            optKey = '_spicy';
+                        } else {
+                            optEn = ' 12Pcs (Normal)';
+                            optAr = ' ١٢ قطعة (عادي)';
+                            optKey = '_normal';
+                        }
                     } else {
-                        optEn = ' (Normal)';
-                        optAr = ' (عادي)';
-                        optKey = '_normal';
+                        if (selected.value === 'Spicy') {
+                            optEn = ' (Spicy)';
+                            optAr = ' (حراق)';
+                            optKey = '_spicy';
+                        } else {
+                            optEn = ' (Normal)';
+                            optAr = ' (عادي)';
+                            optKey = '_normal';
+                        }
                     }
+                }
+            } else if (item.hasCheeseOpt) {
+                const selected = document.querySelector(`input[name="opt_${id}"]:checked`);
+                if (selected) {
+                    const idx = parseInt(selected.value);
+                    const opt = item.cheeseOptions[idx];
+                    finalPrice = opt.price;
+                    optEn = ` (${opt.labelEn})`;
+                    optAr = ` (${opt.labelAr})`;
+                    optKey = `_ch_${idx}`;
                 }
             } else if (item.hasSizes) {
                 const selected = document.querySelector(`input[name="opt_${id}"]:checked`);
@@ -798,7 +1145,7 @@
                             </div>
                         </div>
                         <div class="cart-item-note">
-                            <input type="text" placeholder="Add Note / പ്രത്യേക നിർദ്ദേശം (eg: no hummus, extra garlic...)" value="${item.note || ''}" onchange="updateItemNote('${key}', this.value)" oninput="updateItemNote('${key}', this.value)">
+                            <input type="text" placeholder="Add Note / ملاحظة خاصة (eg: no hummus, extra garlic...)" value="${item.note || ''}" onchange="updateItemNote('${key}', this.value)" oninput="updateItemNote('${key}', this.value)">
                         </div>
                     </div>
                 `;
